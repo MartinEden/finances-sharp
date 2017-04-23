@@ -1,0 +1,17 @@
+﻿@{ 
+    ViewBag.Title = "Admin";
+}
+<div class="page-list">
+    <div class="page-description">
+        <h2>@Html.ActionLink("Categories", "Categories", "Admin")</h2>
+        <h3>Move, rename and delete categories</h3>
+    </div>
+    <div class="page-description">
+        <h2>@Html.ActionLink("Cards", "Index", "Cards")</h2>
+        <h3>Manage cards and identities</h3>
+    </div>
+    <div class="page-description">
+        <h2>@Html.ActionLink("Backup", "Backup", "Admin")</h2>
+        <h3>Take a snapshot of the database</h3>
+    </div>
+</div>

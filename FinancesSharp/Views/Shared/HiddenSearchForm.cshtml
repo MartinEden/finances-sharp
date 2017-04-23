@@ -1,0 +1,9 @@
+﻿@model FinancesSharp.ViewModels.SearchForm
+@Html.HiddenFor(m => m.Search.Name)
+<input type="hidden" name="@Html.NameFor(m => m.Search.Category)" value="Model.CategoryId" />
+<input type="hidden" name="@Html.NameFor(m => m.Search.Person)" value="Model.PersonId" />
+@Html.HiddenFor(m => m.Search.Income)
+@Html.HiddenFor(m => m.Search.DateFrom)
+@Html.HiddenFor(m => m.Search.DateTo)
+@Html.HiddenFor(m => m.Search.AmountFrom)
+@Html.HiddenFor(m => m.Search.AmountTo)

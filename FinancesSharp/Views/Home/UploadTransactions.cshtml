@@ -1,0 +1,63 @@
+﻿@model FinancesSharp.ViewModels.UploadTransactionsResult
+@{
+    ViewBag.Title = "Upload a bank statement";
+}
+
+<h2>Choose a CSV file containing transaction data to upload</h2>
+<p>
+    @if (Model.MostRecentTransactionDate.HasValue)
+    {
+        @:The most recent transaction in the database is dated @Model.MostRecentTransactionDate.Value.ToLongDateString().
+    }
+    else
+    {
+        @:There are no transactions in the database.
+    }
+</p>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <input type="file" name="file" />
+        <button>Upload</button>
+    </div>
+    <p class="subtle">The database will be backed up to '@FinancesSharp.Models.FinanceDb.BackupFolder' before any changes are made</p>
+}
+
+@if (Model.Errors.Any())
+{
+    @:There were @Model.Errors.Count() problems with the statement file
+    <ol>
+    @foreach (var error in Model.Errors)
+    {
+        <li>@error</li>
+    }
+    </ol>
+}
+else if (Model.Transactions.Any())
+{
+    <h3>@Model.Transactions.Count() transactions have been added</h3>
+    @:They range from @Model.Earliest.ToShortDateString() to @Model.Latest.ToShortDateString()
+
+    if (Model.NumberAutocategorised > 0)
+    {
+        <h3>@Model.NumberAutocategorised transactions were auto-categorised</h3>
+        foreach (var kv in Model.Rules)
+        {
+            if (kv.Value.Any())
+            {
+                <h4>@Html.DisplayFor(m => kv.Key)</h4>
+                @:@kv.Value.Count() transactions matched this rule, and the '@Html.DisplayFor(x => kv.Key.Category)' category was applied.
+                <ul>
+                    @foreach (var trx in kv.Value)
+                    {
+                        <li>@Html.DisplayFor(m => trx, "ShortTransaction")</li>
+                    }
+                </ul>
+            }
+        }
+    }
+    else
+    {
+        @:No transactions were auto-categorised
+    }
+}

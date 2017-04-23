@@ -1,0 +1,15 @@
+﻿@model FinancesSharp.Models.CategorisationRule
+<div class="rule">
+    <div class="category">@Html.DisplayFor(m => m.Category)
+        <div class="category-hierarchy">@Html.Partial("CategoryAncestry", Model.Category)</div>
+    </div>
+    <div class="criteria">@Html.DisplayFor(m => m.Criteria)</div>
+    <div class="actions">
+        <form action="@Url.Action("Search", "Rules", new { id = Model.Id })" method="get">
+            <button type="submit">Test</button>
+        </form>
+        <form action="@Url.Action("Deactivate", "Rules", new { id = Model.Id })" method="post">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+</div>

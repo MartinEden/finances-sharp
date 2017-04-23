@@ -1,0 +1,66 @@
+﻿@model FinancesSharp.ViewModels.EditCategoryViewModel
+@{
+    ViewBag.Title = "Admin";
+}
+<script>
+    $(function () {
+        var editor = $(".manage-category");
+        $("#@Html.IdFor(m => m.Category)").change(function () {
+            if ($(this).val()) {
+                editor.fadeIn();
+                $(".id-field").val($(this).val());
+            } else {
+                editor.fadeOut();
+            }
+        });
+        editor
+            .find("input[type=radio]")
+            .click(function () {
+                editor.find(".control").slideUp();
+                $(this).parent().find(".control").slideDown();
+            });
+    });
+</script>
+
+<div class="message">@Model.Message</div>
+
+<h2>Choose a category to manage</h2>
+@Html.EditorFor(m => m.Category)
+
+<div class="manage-category" style="display: none;">
+    <div>
+        <input type="radio" name="manage-category" id="rename" />
+        <label for="rename">Rename</label>
+        <div class="control" style="display: none;">
+            <form action="@Url.Action("ChangeCategoryName", "Admin")" method="post">
+                <input class="id-field" type="hidden" name="id" />
+                <span class="label">Enter a new name </span>
+                <input name="name" type="text" />
+                <button>Save</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <input type="radio" name="manage-category" id="move" />
+        <label for="move">Move</label>
+        <div class="control" style="display: none;">
+            <form action="@Url.Action("MoveCategory", "Admin")" method="post">
+                <input class="id-field" type="hidden" name="@Html.NameFor(m => m.Category)" />
+                <span class="label">Select a new parent, or leave blank to convert to a top-level category</span>
+                @Html.EditorFor(m => m.NewParent)
+                <button>Move</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <input type="radio" name="manage-category" id="delete" />
+        <label for="delete">Delete</label>
+        <div class="control" style="display: none;">
+            <form action="@Url.Action("DeleteCategory", "Admin")" method="post">
+                <input class="id-field" type="hidden" name="@Html.NameFor(m => m.Category)" />
+                <span class="label">Only empty categories with no associated transactions can be deleted</span>
+                <button>Delete</button>
+            </form>
+        </div>
+    </div>
+</div>

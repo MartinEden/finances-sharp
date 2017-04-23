@@ -1,0 +1,7 @@
+﻿@model FinancesSharp.Reports.Report
+@{
+    ViewBag.Title = "Report";
+}
+<h1>@Model.FriendlyName</h1>
+<h2>@Model.FormalName</h2>
+@Html.EditorForModel(Model.ViewName)

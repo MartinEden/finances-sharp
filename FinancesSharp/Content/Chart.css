@@ -1,0 +1,98 @@
+﻿.chart .clickable {
+    cursor: pointer;
+}
+
+.chart .axis .domain {
+    fill: none;
+    stroke: #000;
+}
+
+.chart .axis text {
+    font-size: 16px;
+}
+.chart .axis line {
+    stroke-width: 1px;
+    color: black;
+}
+
+.chart .axis.pale {
+    fill: rgb(210, 210, 210);
+}
+    
+.chart .grid line {
+    stroke: #adadad;
+    stroke-width: 1px;
+}
+
+.chart .bars rect {
+    opacity: 0.9;
+    stroke: rgb(163, 163, 163);
+	fill: rgb(249, 249, 249);
+}
+.chart .bars rect.clickable {        
+    stroke: rgb(105, 56, 165);
+	fill: rgb(242, 235, 251);
+}
+.chart .bars rect.clickable:hover {
+    opacity: 1;
+	fill: rgb(236, 226, 248);
+}
+
+.chart .line {
+    fill: none;
+    opacity: 1;
+    transition: stroke-width 0.5s;
+    transition: opacity 0.5s;
+}
+.chart .scatterplot.active .series .line {
+    opacity: 0.25;
+}
+.chart .scatterplot.active .series.active .line {
+    opacity: 1;
+    stroke-width: 3;
+}
+
+.chart .scatterplot circle {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+.chart .scatterplot.active .series circle {
+    opacity: 0.5;
+}
+.chart .scatterplot.active .series.active circle {
+    opacity: 1;
+}
+
+.chart .datapoint-tooltip {
+    opacity: 0;
+}
+.chart .datapoint-tooltip rect, .chart .datapoint-tooltip polygon {
+    /*fill: rgba(255, 255, 255, 0.8);
+    stroke: rgb(163, 163, 163);*/
+    fill: rgb(105, 56, 165);
+}
+.chart .datapoint-tooltip text {
+    fill: rgb(255, 255, 255);
+    font-size: 10pt;
+}
+
+.chart .legend rect {
+    fill: none;
+    stroke: black;
+}
+.chart .legend {
+    font-size: 12pt;
+}
+.chart .legend text {
+    cursor: default;
+}
+.chart .legend text.clickable {
+    cursor: pointer;
+}
+.chart .legend.active text {
+    fill: rgb(127, 127, 127);
+}
+.chart .legend.active text.active {
+    font-weight: bolder;
+    fill: black;
+}

@@ -1,0 +1,9 @@
+﻿@model string
+@{
+    int id = (int)ViewData["id"];
+}
+
+<span class="fancy-box-name fancy-box" data-id="@id">
+    <input type="text" value="@Model" />
+</span>
+

@@ -1,0 +1,21 @@
+﻿@model FinancesSharp.ViewModels.CategorisationForm
+@{ 
+    var display = "none";
+    if (Model.ShowSection)
+    {
+        display = "block";
+    }
+}
+
+<a href="#" onclick="$('#categorise_section').slideDown(); return false;">Categorise all matching transactions</a>
+<div id="categorise_section" class="subform" style="display: @display;">
+    <div>
+        Choose a category: @Html.EditorFor(m => m.Category)
+        <button class="form-retarget" data-action="@Url.Action("Categorise", "Home")" data-method="post">Categorise</button>
+        @Html.ValidationMessageFor(m => m.Category)
+    </div>
+    <div style="margin-top: 5px;">
+        (@Html.EditorFor(m => m.CreateRule) 
+        @Html.LabelFor(m => m.CreateRule, "Also save this as a new rule to apply automatically in the future"))
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model IndexViewModel
+@using FinancesSharp.ViewModels
+@{
+    ViewBag.Title = "Statement";
+}
+@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { id = "index_form" }))
+{
+    @Html.EditorFor(m => m.Search)
+    @Html.EditorFor(x => x.Sort)
+    <input id="@Html.IdFor(m => m.NextLimit)" name="@Html.NameFor(m => m.NextLimit)" value="@Model.NextLimit" type="hidden" />
+    <div class="index-info">
+        <span class="limit-section">
+            @if (Model.MoreToShow)
+            {
+                @:Showing @Model.CurrentLimit of @Model.Total. <a href="#" onclick="$('#@Html.IdFor(m => m.NextLimit)').val(@Model.Total).parents('form').submit(); return false;">Show all</a>
+            }
+            else
+            {
+                @:Showing all @Model.Total transactions.
+            }
+        </span>
+        @Html.EditorFor(m => m.Categorisation)
+    </div>
+    if (!Model.MoreToShow)
+    {
+        <div>Total change in balance: @Model.TotalChangeInBalance.ToString("C")</div>
+    }
+}
+
+<table>
+    <tr>
+        <th>Description</th>
+        <th>Amount @Html.DisplaySortArrows(TransactionSortMode.SortColumn.Amount)</th>
+        <th>Date @Html.DisplaySortArrows(TransactionSortMode.SortColumn.Date)</th>
+        <th>Who</th>
+        <th>Category</th>
+    </tr>
+@foreach (var trx in Model.Transactions)
+{
+    @Html.DisplayFor(m => trx);
+}
+</table>

@@ -1,0 +1,16 @@
+﻿@model System.Collections.Generic.IEnumerable<FinancesSharp.Models.Card>
+
+@{
+    ViewBag.Title = "Cards";
+}
+
+<table>
+    <tr>
+        <th>Number</th>
+        <th>Owner</th>
+    </tr>
+    @foreach (var card in Model)
+    {
+        <tr>@Html.EditorFor(m => card)</tr>
+    }
+</table>

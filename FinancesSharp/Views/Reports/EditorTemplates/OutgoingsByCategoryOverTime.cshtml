@@ -1,0 +1,13 @@
+﻿@model FinancesSharp.Reports.OutgoingsByCategoryOverTime
+@{ Html.RenderPartial("ByCategoryForm"); }
+@{ Html.RenderPartial("UpOneLevelLink"); }
+<div id="chart"></div>
+<script>
+    $(function() {
+        var data = @Html.Raw(Model.Data.AsJavascriptList());
+        new TimeSeriesChart(data, "#chart", function(drilldownId) {
+            $("#@Html.IdFor(m => m.Category)").val(drilldownId);
+            $("form").submit();
+        });
+    });
+</script>

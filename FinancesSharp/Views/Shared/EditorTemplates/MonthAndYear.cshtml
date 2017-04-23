@@ -1,0 +1,5 @@
+﻿@model FinancesSharp.Reports.Helpers.MonthAndYear
+@{
+    string value = Model.ToString();
+}
+<span class="monthpicker">@Html.TextBox("", value)</span>

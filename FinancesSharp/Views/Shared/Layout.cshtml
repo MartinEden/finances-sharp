@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="~/Scripts/Script.js"></script>
+    <script src="~/Scripts/tree-select.js"></script>
+    <script src="~/Scripts/forms.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="~/Scripts/d3-legend.js" charset="utf-8"></script>
+    <script src="~/Scripts/DatapointTooltip.js" charset="utf-8"></script>
+    <script src="~/Scripts/HorizontalBarChart.js" charset="utf-8"></script>
+    <script src="~/Scripts/TimeSeriesChart.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="~/Content/style.css" />
+    <link rel="stylesheet" href="~/Content/SearchForm.css" />
+    <link rel="stylesheet" href="~/Content/tree-select.css" />
+    <link rel="stylesheet" href="~/Content/Chart.css" />
+    <link rel="stylesheet" href="~/Content/manage-category.css" />
+    <link rel="stylesheet" href="~/Content/themes/base/minified/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/themes/base/minified/jquery.ui.autocomplete.min.css" />
+    <link rel="icon" href="@Url.Content("~/content/favicon.png")" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">@ViewBag.Title</h1>
+        <ul class="navigation">
+            <li><a href="/">Index</a></li>
+            <li>@Html.ActionLink("Upload a bank statement", "UploadTransactions", "Home")</li>
+            <li>@Html.ActionLink("Rules", "Index", "Rules")</li>
+            <li>@Html.ActionLink("Reports", "Index", "Reports")</li>
+            <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+            @RenderSection("Navigation", false)
+        </ul>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <div id="panels">
+        <div class="overlay"></div>
+        <div id="new-category" class="lightbox">
+            <form action="@Url.Action("Create", "Category")" method="post" display="inline">
+                <div class="title">
+                    New category <input type="text" name="name" class="name" style="font-size: inherit;" />
+                </div>
+                <div class="category-box-no-new">
+                    Parent
+                    <input type="text" class="text" value="" />
+                    <input type="hidden" name="parentId" class="value" value="" />
+                    <input type="hidden" class="previous-text" value="" />
+                    <span style="font-size: smaller">(Leave this blank to make a new top-level category)</span>
+                </div>
+                <button>Save</button>
+                <button onclick="$('#panels').fadeOut(); return false;">Cancel</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

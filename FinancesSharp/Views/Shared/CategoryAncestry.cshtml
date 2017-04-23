@@ -1,0 +1,5 @@
+﻿@model FinancesSharp.Models.Category
+@if (Model.Parent != null)
+{
+    <span class="category-parent">@Html.DisplayFor(m => m.Parent)</span>
+}

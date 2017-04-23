@@ -1,0 +1,16 @@
+﻿@model FinancesSharp.Models.Category
+@{ 
+    string name = "";
+    int? id = null;
+    if (Model != null)
+    {
+        name = Model.Name;
+        id = Model.Id;
+    }
+}
+
+<span class="category-box">
+    <input type="text" class="text" value="@name" />
+    <input type="hidden" class="value" name="@Html.NameForModel()" id="@Html.IdForModel()" value="@id" />
+    <input type="hidden" class="previous-text" value="@name" />
+</span>

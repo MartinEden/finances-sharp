@@ -1,0 +1,7 @@
+﻿@model FinancesSharp.Models.Search
+<ul class="search-criteria">
+    @foreach (var part in Model.Criteria)
+    {
+        <li>@part</li>
+    }
+</ul>

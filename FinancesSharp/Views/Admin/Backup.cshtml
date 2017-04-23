@@ -1,0 +1,14 @@
+﻿@model bool
+@{
+    ViewBag.Title = "Admin";
+}
+<h2>Click the button to take a snapshot of the database now</h2>
+<div>Database backups are stored in '@FinancesSharp.Models.FinanceDb.BackupFolder'</div>
+@using (Html.BeginForm())
+{
+    <button>Backup</button>
+}
+@if (Model)
+{
+    <div>Backup successful</div>
+}

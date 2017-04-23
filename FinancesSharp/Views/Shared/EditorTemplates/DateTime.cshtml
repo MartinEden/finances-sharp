@@ -1,0 +1,10 @@
+﻿@model System.DateTime?
+@{
+    string name = Html.NameForModel().ToString();
+    string value = "";
+    if (Model.HasValue)
+    {
+        value = Model.Value.ToShortDateString(); 
+    }        
+}
+<span class="datepicker">@Html.TextBox("", value)</span>

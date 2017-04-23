@@ -1,0 +1,36 @@
+﻿.search-form .part {
+    display: inline-block;
+    float: left;
+    border: 1px solid rgb(180, 180, 180);
+    height: 30px;
+    margin: 0 20px 10px 0;
+    border-radius: 2px;
+    width: 350px;
+}
+.search-form .part.double-width {
+    width: 722px
+}
+.search-form .label {
+    display: inline-block;
+    float: left;
+    background-color: rgb(242, 235, 251);
+    padding: 4px;
+    width: 80px;
+    text-align: center;
+}
+.search-form .field {
+    display: inline-block;
+    float: left;
+    padding: 4px;
+}
+.search-form input, .search-form select {
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 254px;
+}
+.search-form button {
+    font-size: inherit;
+    width: 350px;
+}

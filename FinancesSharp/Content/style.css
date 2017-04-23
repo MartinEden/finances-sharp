@@ -1,0 +1,259 @@
+﻿/*
+    Colour guide.
+    Text is a dark grey: rgb(50, 50, 50)
+    Very light guidelines: rgba(180, 180, 180, 0.075)
+    Light-grey, used as border lines: rgb(180, 180, 180)
+    Mid-grey, used for table headers: rgb(136, 136, 136)
+    Light-grey, used for de-emphasis ("faded out"): rgb(210, 210, 210);
+    Pale purple: rgb(242, 235, 251)
+    Darker pale purple: rgb(236, 226, 248)
+    Purple: rgb(105, 56, 165);
+    Errors: rgb(127, 0, 0);
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 14pt;
+    color: rgb(50, 50, 50);
+    padding: 20px;
+}
+
+a, a:visited, a:hover {
+    color: rgb(105, 56, 165);
+}
+
+button {
+    font-size: inherit;
+}
+input {
+    font-size: inherit;
+    font-family: inherit;
+}
+
+.field-validation-error {
+    color: rgb(127, 0, 0);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table tr td, table tr th {
+    padding: 16px 20px 12px 20px;
+    text-align: left;
+    border-left: 1px solid rgba(180, 180, 180, 0.075);
+}
+table tr th {
+    color: rgb(136, 136, 136);
+    padding-top: 26px;
+}
+table tr:nth-child(even) td {
+    background-color: rgb(242, 235, 251);
+}
+table tr:hover td {
+    background-color: rgb(236, 226, 248);
+}
+
+table tr td.amount {
+    text-align: right;
+}
+
+.header {
+    margin: 0 0 20px 0;
+}
+.header .title {
+}
+.header ul.navigation {
+    margin: 0;
+    display: inline-block;
+    list-style: none;
+    font-size: 10pt;
+}
+.header ul.navigation li {
+    float: left;
+    margin-right: 10px;
+}
+.header ul.navigation li:before {
+    content: '|',
+}
+
+h1 {
+    font-size: 24pt;
+    display: inline;
+}
+h2 {
+    font-size: 16pt;
+}
+h3 {
+    font-size: 14pt;
+    color: rgb(136, 136, 136);
+}
+h4 {
+    color: rgb(136, 136, 136);
+}
+
+.subtle {
+    color: rgb(136, 136, 136);
+    font-size: smaller;
+}
+
+.fancy-box input {
+    padding: -2px;
+    margin: -3px 0;
+    width: 95%;
+    background-color: transparent;
+    border: none;
+}
+
+.unknown-card, .unknown-card a, .unknown-card a:hover {
+    font-size: smaller;
+    color: rgb(127, 0, 0);
+}
+.unknown-person {
+    color: rgb(210, 210, 210);
+}
+
+#panels {
+    display: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.lightbox {
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -200px;
+    width: 600px;
+    height: 400px;
+    position: fixed;
+    border: 1px solid black;
+    background-color: white;
+    display: none;
+    z-index: 2;
+    padding: 20px;
+}
+
+.lightbox .title {
+    font-size: larger;
+}
+
+.lightbox div {
+    margin-bottom: 20px;
+}
+
+.lightbox button {
+    width: 150px;
+}
+
+input.money {
+    width:5em;
+}
+
+.rule {
+    position: relative;
+    display: inline-block;
+    background-color: rgb(242, 235, 251);
+    border: 1px solid rgb(236, 226, 248);
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+}
+.rule .category {
+    font-weight: bold;    
+    white-space: nowrap;
+    margin-bottom: 20px;
+}
+.rule .category-hierarchy {
+    min-height: 20px;
+}
+.rule .actions {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    font-size: 12pt;
+}
+.rule:hover .actions {
+    display: block;
+}
+.rule .actions form {
+    display: inline;
+}
+.rule .rule {
+    height: 150px;
+    margin: 0;
+    border: none;
+}
+
+ul.search-criteria {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.category-parent {
+    display: inline-block;
+    margin-right: 10px;
+    color: rgb(210, 210, 210);
+}
+.category-parent:first-child::after {
+    content: "";
+}
+.category-parent::after {
+    content: "◃";
+    margin-right: 10px;
+}
+.subform {
+    padding: 20px;
+    background-color: rgb(242, 235, 251);
+    border: 1px solid rgb(236, 226, 248);
+    margin: 10px 0;
+}
+
+.index-info {
+    margin: 10px 0;
+}
+
+.page-list {
+}
+.page-description {
+    margin-top: 40px;
+}
+.page-description h2 {
+    margin: 0;
+    border-bottom: 1px solid rgb(180, 180, 180);
+    width: 500px;
+}
+.page-description h2 a {
+    margin-bottom: 0;
+    text-decoration: none;
+}
+.page-description h3 {
+    margin-top: 0;
+}
+
+.sort-arrow {
+    float: right;
+    cursor: pointer;
+    opacity: 0;
+    color: rgb(50, 50, 50);
+}
+.sort-arrow.active {
+    float: right;
+    cursor: pointer;
+    opacity: 0;
+    color: rgb(136, 136, 136);
+}
+th:hover .sort-arrow {
+    opacity: 1;
+}

@@ -1,0 +1,18 @@
+﻿@model FinancesSharp.Helpers.ISelectable
+@using FinancesSharp.Helpers
+@{
+    var options = (IEnumerable<ISelectable>)ViewData["options"];
+    string emptyOption = (string)(ViewData["empty"] ?? " - Select - ");
+}
+<select name="@Html.NameForModel()">
+    <option value="">@emptyOption</option>
+    @foreach (ISelectable option in options)
+    {
+        string selected = "";
+        if (option.Equals(Model))
+        {
+            selected = "selected=\"true\"";
+        }
+        <option value="@option.Value" @selected>@option.Text</option>
+    }
+</select>

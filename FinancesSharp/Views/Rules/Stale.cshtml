@@ -1,0 +1,14 @@
+﻿@model FinancesSharp.ViewModels.StaleRulesViewModel
+@{
+    ViewBag.Title = "Stale rules";
+}
+
+<h2>@Model.Rules.Count() stale rules</h2>
+@Html.ActionLink("Show all rules", "Index")
+
+<div class="rules">
+    @foreach (var rule in Model.Rules)
+    {
+        @Html.DisplayFor(x => rule)
+    }
+</div>

@@ -1,0 +1,9 @@
+﻿@model FinancesSharp.Models.Transaction
+
+<tr>
+    <td>@Html.EditorFor(m => m.Name, "NameBox", new { id = Model.Id })</td>
+    <td class="amount">@Model.Amount</td>
+    <td>@Model.Date.ToShortDateString()</td>
+    <td>@Html.DisplayFor(m => m.Card)</td>
+    <td>@Html.EditorFor(m => m.Category, "CategoryFancyBox", new { id = Model.Id })</td>
+</tr>

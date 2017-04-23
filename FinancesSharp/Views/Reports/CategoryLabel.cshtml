@@ -1,0 +1,19 @@
+﻿@model FinancesSharp.Reports.IByCategoryReport
+@using FinancesSharp.Models
+@{ 
+    var category = (Category)ViewData["category"];
+}
+@if (category == Model.Category)
+{
+    @:Miscellaneous
+}
+else if (category.DirectChildren.Any())
+{
+    <a href="#" onclick="$('#@Html.IdFor(m => m.Category)').val('@category.Id'); $('form').submit(); return false;">
+        @Html.DisplayFor(x => category)
+    </a>
+}
+else
+{
+    @Html.DisplayFor(x => category)
+}

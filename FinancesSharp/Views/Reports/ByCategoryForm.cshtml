@@ -1,0 +1,21 @@
+﻿@model FinancesSharp.Reports.IByCategoryReport
+@using (Html.BeginForm(null, null, FormMethod.Get))
+{
+    <div class="search-form">
+        <div class="part">
+            <span class="label">Category</span>
+            <span class="field">
+                @Html.EditorFor(m => m.Category)
+            </span>
+        </div>
+        <div class="part double-width">
+            <span class="label">Date</span>
+            <span class="field">
+                From @Html.EditorFor(m => m.DateFrom)
+                to @Html.EditorFor(m => m.DateTo)
+            </span>
+        </div>
+        <button>Update</button>
+        <div style="clear: left"></div>
+    </div>
+}

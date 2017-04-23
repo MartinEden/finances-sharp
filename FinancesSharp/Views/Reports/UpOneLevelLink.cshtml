@@ -1,0 +1,5 @@
+﻿@model FinancesSharp.Reports.IByCategoryReport
+@if (Model.Category != null)
+{
+    <a href="#" onclick="$('#@Html.IdFor(m => m.Category)').val('@Model.ParentCategoryId'); $('form').submit(); return false;">Up one level</a>
+}

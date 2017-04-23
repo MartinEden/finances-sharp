@@ -1,0 +1,9 @@
+﻿@model System.DateTime
+@{ 
+    string value = "";
+    if (Model != null)
+    {
+        value = Model.ToShortDateString();
+    }
+}
+@value

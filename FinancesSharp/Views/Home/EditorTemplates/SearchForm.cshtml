@@ -1,0 +1,49 @@
+﻿@model FinancesSharp.ViewModels.SearchForm
+@using FinancesSharp.Helpers
+
+<div class="search-form">
+    <div class="part">
+        <span class="label">Name</span>
+        <span class="field">@Html.TextBoxFor(m => m.Search.Name)</span>
+    </div>
+    <div class="part">
+        <span class="label">Category</span>
+        <span class="field category-box-no-new">
+            <input type="text"   class="text" value="@Model.CategoryName" />
+            <input type="hidden" class="value" value="@Model.CategoryId" name="@Html.NameFor(m => m.Search.Category)" />
+            <input type="hidden" class="previous-text" value="@Model.CategoryName" />
+        </span>
+    </div>
+    <div class="part">
+        <span class="label">Who</span>
+        <span class="field">@Html.SmartDropdownFor(m => m.Search.Person, Model.People, empty: "Anyone")</span>
+    </div>
+    <div class="part">
+        <span class="label">Direction</span>
+        <span class="field">
+            @Html.HiddenFor(m => m.Search.Income)
+            <select onchange="$('#@Html.IdFor(m => m.Search.Income)').val($(this).val());">
+                <option value="" @Html.SelectedIf(Model.Search.Income == null)>Any</option>
+                <option value="true" @Html.SelectedIf(Model.Search.Income == true)>Income</option>
+                <option value="false" @Html.SelectedIf(Model.Search.Income == false)>Outgoing</option>
+            </select>
+        </span>
+    </div>
+    <div style="clear: left"></div>
+    <div class="part double-width">
+        <span class="label">Date</span>
+        <span class="field">
+            From @Html.EditorFor(m => m.Search.DateFrom)
+            to @Html.EditorFor(m => m.Search.DateTo)
+        </span>
+    </div>
+    <div class="part double-width">
+        <span class="label">Amount</span>
+        <span class="field">
+            From £@Html.TextBoxFor(m => m.Search.AmountFrom, new { @class = "money" })
+            to £@Html.TextBoxFor(m => m.Search.AmountTo, new { @class = "money" })
+        </span>
+    </div>
+    <div style="clear: left"></div>
+    <button>Search</button>
+</div>

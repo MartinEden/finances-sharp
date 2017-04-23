@@ -1,0 +1,13 @@
+﻿@model IEnumerable<FinancesSharp.Reports.Report>
+@{ 
+    ViewBag.Title = "Reports";
+}
+<div class="page-list">
+@foreach (var report in Model)
+{
+    <div class="page-description">
+        <h2>@Html.ActionLink(report.FriendlyName, report.InternalName, "Reports")</h2>
+        <h3>@report.FormalName</h3>
+    </div>
+}
+</div>

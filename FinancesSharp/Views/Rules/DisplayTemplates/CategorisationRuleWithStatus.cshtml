@@ -1,0 +1,12 @@
+﻿@model FinancesSharp.ViewModels.CategorisationRuleWithStatus
+<div class="rule">
+    @Html.DisplayFor(m => m.Rule)
+    @if (Model.MostRecentMatch.HasValue)
+    {
+        @:Last matched on @Html.DisplayFor(m => m.MostRecentMatch)
+    }
+    else
+    {
+        @:This rule doesn't match anything
+    }
+</div>

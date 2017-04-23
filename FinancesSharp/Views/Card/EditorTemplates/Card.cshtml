@@ -1,0 +1,29 @@
+﻿@model FinancesSharp.Models.Card
+@using FinancesSharp.Helpers
+@{
+    string personList = Html.Db().People.OrderBy(c => c.Name).AsEnumerable().AsJavascriptList();
+}
+
+<script>
+    $(function () {
+        fancyBox('@Model.Number', '@Url.Action("ChangeOwner", new { cardNumber = Model.Number })', 'personName', null);
+        var box = $("#fancy-box-@Model.Number input");
+        box
+            .focus(function() { box.val("").autocomplete("search", ""); })
+            .autocomplete({ 
+                source: @Html.Raw(personList) , 
+                minLength: 0,
+                select: function(event, ui) { 
+                    box.val(ui.item.value);
+                    box.blur(); 
+                },
+            });
+    });
+</script>
+
+<td>@Model.Number</td>
+<td>
+    <span id="fancy-box-@Model.Number">
+        @Html.TextBoxFor(m => m.Person)
+    </span>
+</td>

@@ -1,0 +1,62 @@
+.tree-select {
+	position: absolute;
+	border: 1px solid rgb(169, 169, 169);
+	border-radius: 1px;
+	width: 250px;
+	height: 300px;
+	background-color: white;
+	z-index: 10;
+}
+.tree-select .contents {
+    position: relative;
+    height: 280px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.tree-select ol {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+.tree-select .info {
+	cursor: pointer;
+	display: inline-block;
+	border-top: 1px solid rgb(240, 240, 240);
+    margin: 1px 0;
+    padding-left: 5px;
+}
+.tree-select .info:hover, .tree-select .info.highlight:hover {
+	background-color: rgb(30, 144, 255);
+}
+.tree-select .info:hover .name, .tree-select .info.highlight:hover .name {
+	color: white;
+}
+.tree-select .info.highlight {
+	background-color: rgb(47, 158, 0);
+}
+.tree-select .info.highlight .name {
+	color: white;
+}
+.tree-select .expander {
+	width: 15px;
+	height: 15px;
+	margin: 6px 5px 0px 2px;
+	display: inline-block;
+	text-align: center;
+	cursor: pointer;
+}
+.tree-select .expander:focus {
+	outline: none;	
+}
+.tree-select button {
+    position: absolute;
+    top: 280px;
+    width: 100%;
+    height: 20px;
+    font-size: 12px;
+}
+.tree-select li.nothing-option {
+    text-align: center;
+    color: rgb(210, 210, 210);
+    font-style: italic;
+}

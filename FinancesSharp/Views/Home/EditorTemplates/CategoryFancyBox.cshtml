@@ -1,0 +1,11 @@
+﻿@model FinancesSharp.Models.Category
+@{
+    int id = (int)ViewData["id"];
+}
+
+<span class="fancy-box category-box" data-id="@id">
+    <input type="text" class="text" value="@Model.Name" />
+    <input type="hidden" class="value" name="@Html.NameForModel()" value="@Model.Id" />
+    <input type="hidden" class="previous-text" value="@Model.Name" />
+</span>
+

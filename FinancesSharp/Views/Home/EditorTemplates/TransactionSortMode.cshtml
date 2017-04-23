@@ -1,0 +1,30 @@
+﻿@model TransactionSortMode
+@using FinancesSharp.ViewModels
+
+@Html.HiddenFor(x => x.Column)
+@Html.HiddenFor(x => x.Order)
+<script>
+    $(function () {
+        var columnField = $('#@Html.IdFor(x => x.Column)');
+        var orderField = $('#@Html.IdFor(x => x.Order)');
+        var form = columnField.closest('form');
+
+        $(".sort-arrow").each(function() {
+            var arrow = $(this);
+            var column = arrow.data("column");
+            var order = arrow.data("order");
+
+            if (column == '@Model.Column.ToString()' && order == '@Model.Order.ToString()') {
+                arrow
+                    .addClass("active")
+                    .css("opacity", 1);                
+            } else {
+                arrow.click(function () {
+                    columnField.val(column);
+                    orderField.val(order);
+                    form.submit();
+                });
+            }
+        });
+    });
+</script>

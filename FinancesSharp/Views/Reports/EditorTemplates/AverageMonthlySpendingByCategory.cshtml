@@ -1,0 +1,20 @@
+﻿@model FinancesSharp.Reports.AverageMonthlySpendingByCategory
+@{ Html.RenderPartial("ByCategoryForm"); }
+@{ Html.RenderPartial("UpOneLevelLink"); }
+<table style="max-width: 700px;">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Average monthly spend (£)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var average in Model.Data)
+        {
+            <tr>
+                <td>@{ Html.RenderPartial("CategoryLabel", Model, new ViewDataDictionary() { { "category", average.Category } }); }</td>
+                <td class="amount">@Html.DisplayFor(x => average.Amount)</td>
+            </tr>
+        }
+    </tbody>
+</table>

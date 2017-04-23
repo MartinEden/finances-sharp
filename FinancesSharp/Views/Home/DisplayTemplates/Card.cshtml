@@ -1,0 +1,13 @@
+﻿@model FinancesSharp.Models.Card
+@if (Model == null)
+{
+    <span class="unknown-person">Unknown</span>
+}
+else if (Model.Person != null)
+{
+    @Html.DisplayFor(m => m.Person)
+}
+else
+{
+    <span class="unknown-card"><a href="/Cards">Unknown card @Model.Number</a></span>
+}
