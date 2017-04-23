@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancesSharp.Tests", "FinancesSharp.Tests\FinancesSharp.Tests.csproj", "{003A2471-0807-46F3-919A-C29E65AFFBF2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancesSharp.Migrate", "FinanceSharp.Migrate\FinancesSharp.Migrate.csproj", "{B4390819-7BF9-4E69-9E76-5E2B45B76983}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancesSharp", "FinancesSharp\FinancesSharp.csproj", "{C830D584-B3F2-43E1-B16F-C84F45C3D114}"
 EndProject
@@ -19,10 +17,6 @@ Global
 		{003A2471-0807-46F3-919A-C29E65AFFBF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{003A2471-0807-46F3-919A-C29E65AFFBF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{003A2471-0807-46F3-919A-C29E65AFFBF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4390819-7BF9-4E69-9E76-5E2B45B76983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4390819-7BF9-4E69-9E76-5E2B45B76983}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4390819-7BF9-4E69-9E76-5E2B45B76983}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4390819-7BF9-4E69-9E76-5E2B45B76983}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C830D584-B3F2-43E1-B16F-C84F45C3D114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C830D584-B3F2-43E1-B16F-C84F45C3D114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C830D584-B3F2-43E1-B16F-C84F45C3D114}.Release|Any CPU.ActiveCfg = Release|Any CPU
