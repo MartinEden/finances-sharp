@@ -1,16 +1,19 @@
-﻿using System;
+using System;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using MySql.Data.Entity;
 
 namespace FinancesSharp.Models
 {
+	[DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class FinanceDb : DbContext
     {
         public FinanceDb()
+			: base("Server=localhost;Port=3306;Database=finances-sharp;Uid=finances-sharp")
         {
-            //Database.SetInitializer<FinanceDb>(new DropCreateDatabaseIfModelChanges<FinanceDb>());
+            Database.SetInitializer<FinanceDb>(new DropCreateDatabaseIfModelChanges<FinanceDb>());
         }
 
         public virtual DbSet<Card> Cards { get; set; }
