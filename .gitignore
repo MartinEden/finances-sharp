@@ -8,5 +8,6 @@ Database backups/*
 FinancesSharp/App_Data/FinancesSharp.Models.FinanceDb.mdf
 FinancesSharp/App_Data/FinancesSharp.Models.FinanceDb_log.ldf
 FinancesSharp/FinancesSharp.csproj.user
+FinancesSharp\.userprefs
 packages/*
 Statements/*
