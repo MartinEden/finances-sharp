@@ -29,6 +29,7 @@
     padding: 0;
     border: 0;
     width: 254px;
+    background-color: inherit;
 }
 .search-form button {
     font-size: inherit;
