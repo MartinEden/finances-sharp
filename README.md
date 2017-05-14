@@ -5,7 +5,10 @@ You can import statements using the Internet Banking CSV format. Then, once the 
 
 This is just an application I wrote for my own use. There is plenty of scope to, for example, add more reports and to handle more statement import formats. Feel free to contribute pull requests or, failing that, raise issues and I may get time to fix and extend things.
 
-## Build & deploy
-This application isn't currently set up with proper automated build/deploy or continuous integration. So if you want to use it your best best is to download the free Visual Studio Community Edition, open the solution, and use Build > Publish to get it running on your PC. You'll need to IIS installed as a server.
+# Linux build instructions
+1. If you don't have mono already: `sudo apt-get install mono-complete`
+2. `xbuild FinancesSharp.sln`
+3. `cd FinancesSharp && xsp` to run an XSP server (usual disclaimers regarding XSP not being suitable for real production deployment)
 
-Alternatively, I'd be interested to hear from anyone who has it running under Mono, as then I could containerise the application and publish it on Docker Hub.
+# Windows build instructions
+Use Visual Studio (Community Edition is free) to build. Then use the Build -> Publish option to get it running in IIS.

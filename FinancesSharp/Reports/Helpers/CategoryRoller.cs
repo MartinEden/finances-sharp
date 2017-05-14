@@ -18,7 +18,7 @@ namespace FinancesSharp.Reports.Helpers
         public IEnumerable<CategoryAmount> RollUpByCategoriesOfInterest(FinanceDb db, IEnumerable<TSource> totals)
         {
             initialize(totals);
-            foreach (var parent in getCategoriesOfInterest(db))
+            foreach (var parent in getCategoriesOfInterest(db).ToList())
             {
                 var children = new HashSet<Category>(parent.Children);
                 var categoryTotals = totals.Where(t => children.Contains(t.Category));
