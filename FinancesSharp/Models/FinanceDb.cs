@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Web.Configuration;
 using MySql.Data.Entity;
 
 namespace FinancesSharp.Models
@@ -48,40 +49,39 @@ namespace FinancesSharp.Models
             var mostRecentTransaction = Transactions.OrderByDescending(x => x.Date).FirstOrDefault();
             if (mostRecentTransaction != null)
             {
-                string path = getBackupFileName(mostRecentTransaction);
+				var backup = getBackupMechanism();
+				string path = getBackupFileName(mostRecentTransaction, backup.Extension);
                 if (!File.Exists(path))
                 {
-                    Backup(path);
+					backup.DoBackup(path, Database);
                 }
             }
         }
 
-        private static string getBackupFileName(Transaction mostRecentTransaction)
+        private static string getBackupFileName(Transaction mostRecentTransaction, string extension)
         {
             var today = DateTime.Today.ToString("yyyy-MM-dd");
             var mostRecent = mostRecentTransaction.Date.ToString("yyyy-MM-dd");
-            string name = string.Format("{0} (Most recent transaction - {1}).bak", today, mostRecent);
+			string name = string.Format("{0} (Most recent transaction - {1}).{2}", today, mostRecent, extension);
             var path = Path.Combine(BackupFolder, name);
             return path;
         }
 
-        public void Backup(string path)
+		private IBackupMechanism getBackupMechanism()
         {
-            var connection = Database.Connection;
-            connection.Open();
-            try
-            {
-                var databaseName = new SqlConnectionStringBuilder(connection.ConnectionString).InitialCatalog;
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = string.Format("BACKUP DATABASE [{0}] TO DISK = '{1}'", databaseName, path);
-                    command.ExecuteNonQuery();      
-                }
-            }
-            finally
-            {
-                connection.Close();
-            }
+			var dialect = WebConfigurationManager.AppSettings["SQLDialect"];
+			if (dialect == "MySQL")
+			{
+				return new MySQLBackup();
+			}
+			else if (dialect == "MSSQL")
+			{
+				return new MSSQLBackup();
+			}
+			else
+			{
+				throw new Exception("Unknown SQL dialect: " + dialect);
+			}
         }
         public static string BackupFolder
         {
