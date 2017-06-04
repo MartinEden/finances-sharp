@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
 
 namespace FinancesSharp
 {
@@ -47,17 +48,36 @@ namespace FinancesSharp
 
 		public void DoBackup(string path, Database database)
 		{
-			/*var connString = ConnectionStringHelper.Get("FinancesSharpContext");
-			var args = String.Format("-h {0} -P {1} -u {2} --skip-extended-insert {3} > {4}",
-				connString["server"], connString["port"], connString["uid"], connString["database"], path);
-			var startInfo = new ProcessStartInfo("/usr/bin/mysqldump", args);
-			startInfo.UseShellExecute = false;
+			var connString = ConnectionStringHelper.Get("FinancesSharpContext");
+			var args = String.Format("-h {0} -P {1} -u {2} --skip-extended-insert {3}",
+				connString["server"], connString["port"], connString["uid"], connString["database"]);
+			
+			var startInfo = new ProcessStartInfo("/usr/bin/mysqldump", args)
+			{
+			    UseShellExecute = false,
+			    RedirectStandardOutput = true
+			};
 			var proc = Process.Start(startInfo);
+			using (var outStream = new StreamWriter(path))
+			{
+				copyToOutputStream(proc.StandardOutput, outStream);
+			}
 			proc.WaitForExit();
+
 			if (proc.ExitCode != 0)
 			{
 				throw new Exception("Backup failed with exit code " + proc.ExitCode);
-			}*/
+			}
+		}
+
+		private void copyToOutputStream(StreamReader inputStream, StreamWriter outputStream)
+		{
+			string line = null;
+			while ((line = inputStream.ReadLine()) != null)
+			{
+				outputStream.WriteLine(line);
+			}
+			outputStream.Write(inputStream.ReadToEnd());
 		}
 	}
 }
