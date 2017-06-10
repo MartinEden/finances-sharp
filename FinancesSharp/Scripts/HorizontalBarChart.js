@@ -2,7 +2,7 @@
     var margin = {
         left: 200,
         right: 80,
-        top: 70,
+        top: 30,
         bottom : 0
     }
     var totalSize = { width: 1600, height: data.length * 60 + margin.top + margin.bottom };

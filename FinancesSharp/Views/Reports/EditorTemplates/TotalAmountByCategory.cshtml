@@ -2,6 +2,7 @@
 @using FinancesSharp.Helpers
 @{ Html.RenderPartial("ByCategoryForm"); }
 @{ Html.RenderPartial("UpOneLevelLink"); }
+<div class="chart-summary">Grand total: £@Model.GrandTotal.ToString("N0")</div>
 <div id="chart"></div>
 <script>
     $(function() {

@@ -17,7 +17,7 @@ namespace FinancesSharp.Reports
         {
             get
             {
-                var grandTotal = data.Sum(x => x.Amount);
+                var grandTotal = GrandTotal;
                 foreach (var total in data)
                 {
                     string mainLabel = total.Category == Category ? "Miscellaneous" : total.Category.Name;
@@ -28,6 +28,11 @@ namespace FinancesSharp.Reports
                         drillDownIdFor(total.Category));
                 }
             }
+        }
+
+        public decimal GrandTotal
+        {
+            get { return data.Sum(x => x.Amount); }
         }
 
         private object percentageFor(CategoryAmount total, decimal grandTotal)

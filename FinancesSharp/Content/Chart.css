@@ -1,4 +1,9 @@
-﻿.chart .clickable {
+﻿.chart-summary {
+    margin: 40px 0 10px 195px;
+    font-size: 16pt;
+}
+
+.chart .clickable {
     cursor: pointer;
 }
 
