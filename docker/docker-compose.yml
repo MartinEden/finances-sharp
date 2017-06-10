@@ -1,0 +1,17 @@
+version: '2'
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ONETIME_PASSWORD=true
+      - MYSQL_DATABASE=finances-sharp
+      - MYSQL_USER=finances-sharp
