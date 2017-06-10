@@ -13,7 +13,7 @@ namespace FinancesSharp.ViewModels
         {
             Rules = db.ActiveRules
                 .OrderBy(x => x.Category.Id)
-                .AsEnumerable();
+                .ToList();
         }
     }
 }
