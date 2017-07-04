@@ -19,6 +19,15 @@
     </div>
 }
 @{ Html.RenderPartial("UpOneLevelLink"); }
+
+<style>
+    .separator {
+        font-weight: bold;
+        margin-top: 60px;
+    }
+</style>
+
+<div class="separator">Higher spending than the average</div>
 <table style="max-width: 700px;">
     <thead>
         <tr>
@@ -30,7 +39,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var category in Model.Data)
+        @foreach (var category in Model.HigherSpendingData)
         {
             <tr>
                 <td>@{ Html.RenderPartial("CategoryLabel", Model, new ViewDataDictionary() { { "category", category.Category } }); }</td>
@@ -42,3 +51,29 @@
         }
     </tbody>
 </table>
+
+<div class="separator">Savings compared to the average</div>
+<table style="max-width: 700px;">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Average monthly spend (£)</th>
+            <th>Spend in selected month (£)</th>
+            <th>Difference (£)</th>
+            <th>Difference (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.LowerSpendingData)
+        {
+            <tr>
+                <td>@{ Html.RenderPartial("CategoryLabel", Model, new ViewDataDictionary() { { "category", category.Category } }); }</td>
+                <td class="amount">@Html.DisplayFor(x => category.AverageAmount)</td>
+                <td class="amount">@Html.DisplayFor(x => category.SelectedAmount)</td>
+                <td>@Html.DisplayFor(x => category.Difference)</td>
+                <td style="color: @category.CssColor;">@Html.DisplayFor(x => category.PercentageDifference)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -10,7 +10,8 @@ namespace FinancesSharp.Reports
     [ModelBinder(typeof(UnusualSpendingByCategoryBinder))]
     public class UnusualSpendingByCategory : AverageMonthlySpendingByCategory
     {
-        public new IEnumerable<CategoryComparison> Data { get; private set; }
+        public IEnumerable<CategoryComparison> HigherSpendingData { get; private set; }
+        public IEnumerable<CategoryComparison> LowerSpendingData { get; private set; }
         public MonthAndYear SelectedMonth { get; set; }
 
         public UnusualSpendingByCategory()
@@ -36,14 +37,20 @@ namespace FinancesSharp.Reports
                 .Intersect(selectedMonthData.Select(x => x.Category))
                 .ToList();
 
-            Data = categories.Select(category => new CategoryComparison(
+            var data = categories.Select(category => new CategoryComparison(
                 category,
                 averageData.Single(x => x.Category == category).Amount,
                 selectedMonthData.Single(x => x.Category == category).Amount)
-            )
-            .Where(x => x.Difference > 0)
-            .OrderByDescending(x => x.Difference)
-            .ToList();
+            ).ToList();
+
+            HigherSpendingData = data
+                .Where(x => x.Difference > 0)
+                .OrderByDescending(x => x.Difference)
+                .ToList();
+            LowerSpendingData = data
+                .Where(x => x.Difference < 0)
+                .OrderBy(x => x.Difference)
+                .ToList();
 
             return averageData;
         }
