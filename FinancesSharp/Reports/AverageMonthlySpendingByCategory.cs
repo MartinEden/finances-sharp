@@ -38,6 +38,11 @@ namespace FinancesSharp.Reports
             get { return data; }
         }
 
+        public decimal GrandTotal
+        {
+        	get { return data.Sum(x => x.Amount); }
+        }
+
         protected override IEnumerable<CategoryAmount> calculate(FinanceDb db, IQueryable<Transaction> transactions)
         {
             var monthAndCategoryTotals = transactions

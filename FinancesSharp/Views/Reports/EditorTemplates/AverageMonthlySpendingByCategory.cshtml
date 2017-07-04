@@ -9,6 +9,10 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td>Total</td>
+            <td class="amount">@Html.DisplayFor(x => Model.GrandTotal)</td>
+        </tr>
         @foreach (var average in Model.Data)
         {
             <tr>
