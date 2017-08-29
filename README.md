@@ -21,17 +21,21 @@ time to fix and extend things.
 ## Setup a MySQL instance
 1. Create a blank database server:
    ```
-    sudo apt install mysql-server
-    sudo apt install mysql-client-core-5.7
-    mysql -u root -p
-    ```
+   sudo apt install mysql-server
+   sudo apt install mysql-client-core-5.7
+   ```
 1. Run the app with connection string
-   `connectionString="server=localhost;port=3306;database=finances_sharp;uid=root;pwd=ROOT_PASSWORD"`
+   ```
+   connectionString="server=localhost;port=3306;database=finances_sharp;uid=root;pwd=ROOT_PASSWORD"
+   ```
    Entity Framework will create a blank database using Code First.
 1. Update the connection string to a limited user:
-   `connectionString="server=localhost;port=3306;database=finances_sharp;uid=finances_sharp"`
+   ```
+   connectionString="server=localhost;port=3306;database=finances_sharp;uid=finances_sharp"
+   ```
 1. Setup that user in the server:
    ```
+   mysql -u root -p
    create user finances_sharp;
    grant all privileges on finances_sharp.* to finances_sharp;
    flush privileges;
