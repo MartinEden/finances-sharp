@@ -46,6 +46,24 @@
             });
         });
 
+    // Setup card editing
+    $(".fancy-box.card-box")
+        .find("input.value")
+        .on('keyup', function (event) {
+            if (event.which == '13') {
+                $(this).blur();
+            }
+        })
+        .blur(function() {
+            var input = $(this);
+            var cardNumber = input.parent().data("cardNumber");
+            $.ajax("/Card/ChangeOwner/" + cardNumber, {
+                data: { "personName": input.val() },
+                type: 'POST',
+            });
+        })
+
+
     var refreshCategorySelectors = function () {
         $.ajax("/Category/All", {
             dataType: "json",
