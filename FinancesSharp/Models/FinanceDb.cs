@@ -12,7 +12,7 @@ namespace FinancesSharp.Models
     public class FinanceDb : DbContext
     {
         public FinanceDb()
-			: base("Server=localhost;Port=3306;Database=finances-sharp;Uid=finances-sharp")
+			: base("Server=localhost;Port=3306;Database=finances_sharp;Uid=finances_sharp")
         {
             Database.SetInitializer<FinanceDb>(new DropCreateDatabaseIfModelChanges<FinanceDb>());
         }

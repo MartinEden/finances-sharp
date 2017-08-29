@@ -18,6 +18,28 @@ time to fix and extend things.
 3. `cd FinancesSharp && xsp` to run an XSP server (usual disclaimers regarding 
     XSP not being suitable for real production deployment)
 
+## Setup a MySQL instance
+1. Create a blank database server:
+   ```
+    sudo apt install mysql-server
+    sudo apt install mysql-client-core-5.7
+    mysql -u root -p
+    ```
+1. Run the app with connection string
+   `connectionString="server=localhost;port=3306;database=finances_sharp;uid=root;pwd=ROOT_PASSWORD"`
+   Entity Framework will create a blank database using Code First.
+1. Update the connection string to a limited user:
+   `connectionString="server=localhost;port=3306;database=finances_sharp;uid=finances_sharp"`
+1. Setup that user in the server:
+   ```
+   create user finances_sharp;
+   grant all privileges on finances_sharp.* to finances_sharp;
+   flush privileges;
+   ```
+
+## Restore backup (optional)
+    mysql -u finances_sharp finances_sharp < path_to_backup.sql
+
 # Windows build instructions
 Use Visual Studio (Community Edition is free) to build. Then use the Build -> 
 Publish option to get it running in IIS.
