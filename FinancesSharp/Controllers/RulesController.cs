@@ -14,7 +14,7 @@ namespace FinancesSharp.Controllers
 
         public ActionResult Stale()
         {
-            var vm = new StaleRulesViewModel(Db.ActiveRules, Db.Transactions);
+            var vm = new StaleRulesViewModel(Db.ActiveRules.ToList(), Db.Transactions);
             return View(vm);
         }
 

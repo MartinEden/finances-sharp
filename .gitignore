@@ -3,6 +3,7 @@
 */bin/*
 */obj/*
 .vs/*
+.idea/*
 Backup/*
 Database backups/*
 FinancesSharp/App_Data/FinancesSharp.Models.FinanceDb.mdf

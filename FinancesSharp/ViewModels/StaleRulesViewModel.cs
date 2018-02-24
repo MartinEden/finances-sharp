@@ -16,7 +16,7 @@ namespace FinancesSharp.ViewModels
             var rules = new List<CategorisationRuleWithStatus>();
             foreach (var rule in all)
             {
-                var matches = transactions.Where(rule.Criteria.IsMatch());
+                var matches = transactions.Where(rule.Criteria.IsMatch()).ToList();
                 var mostRecentMatch = matches.OrderByDescending(x => x.Date).FirstOrDefault();
                 if (mostRecentMatch != null)
                 {
