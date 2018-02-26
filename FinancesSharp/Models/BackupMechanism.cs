@@ -48,7 +48,7 @@ namespace FinancesSharp
 
 		public void DoBackup(string path, Database database)
 		{
-			var connString = ConnectionStringHelper.Get("FinancesSharpContext");
+			var connString = ConnectionStringHelper.Get("FinanceDb");
 			var args = String.Format("-h {0} -P {1} -u {2} --skip-extended-insert {3}",
 				connString["server"], connString["port"], connString["uid"], connString["database"]);
 			
