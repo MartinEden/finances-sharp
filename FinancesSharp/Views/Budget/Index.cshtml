@@ -44,7 +44,9 @@
     });
 </script>
 
-<div class="budget-items"></div>
+<div class="budget-items">
+    <img src="@Url.Content("~/Content/spinner.gif")"/>
+</div>
 <div class="new-budget-item">
     <h2>Add a new budget item</h2>
     <form method="post" action="@Url.Action("CreateBudgetItem", new { Model.Id })">

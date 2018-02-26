@@ -155,6 +155,9 @@
     <Compile Include="Helpers\ModelBindingHelpers.cs" />
     <Compile Include="Helpers\RouteValueDictionaryExtensions.cs" />
     <Compile Include="Helpers\SubstExpressionVisitor.cs" />
+    <Content Include="Content\spinner.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Migrations\20180224_1603_AddBudget.sql" />
     <Compile Include="Models\BudgetItem.cs" />
     <Compile Include="Models\Card.cs" />

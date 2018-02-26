@@ -7,7 +7,8 @@ namespace FinancesSharp.ViewModels
     {
         [Required]
         public string Name { get; set; }
-        [Required, DisplayName("Budgeted amount")]
+        [Required, Range(0, int.MaxValue)]
+        [DisplayName("Budgeted amount")]
         public decimal BudgetedAmount { get; set; }
     }
 }
