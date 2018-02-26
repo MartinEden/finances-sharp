@@ -14,6 +14,7 @@ namespace FinancesSharp.Models
         protected Category()
         {
             DirectChildren = new List<Category>();
+            BudgetItems = new List<BudgetItem>();
         }
         public Category(string name, Category parent)
             : this()
@@ -27,6 +28,7 @@ namespace FinancesSharp.Models
         [Required]
         public string Name { get; set; }
         public virtual Category Parent { get; set; }
+        public virtual IList<BudgetItem> BudgetItems { get; set; }
         public virtual IList<Category> DirectChildren { get; set; }
         public IEnumerable<Category> Children
         {

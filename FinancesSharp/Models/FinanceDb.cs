@@ -14,9 +14,13 @@ namespace FinancesSharp.Models
         public FinanceDb()
 			: base("Server=localhost;Port=3306;Database=finances_sharp;Uid=finances_sharp")
         {
-            Database.SetInitializer<FinanceDb>(new DropCreateDatabaseIfModelChanges<FinanceDb>());
+            Database.SetInitializer(new EmptyInitializer());
+            //Database.SetInitializer<FinanceDb>(new CreateDatabaseIfNotExists<FinanceDb>());
+            //Database.SetInitializer<FinanceDb>(new DropCreateDatabaseIfModelChanges<FinanceDb>());
         }
-
+        
+        public virtual DbSet<Budget> Budgets { get; set; }
+        public virtual DbSet<BudgetItem> BudgetItems { get; set; }
         public virtual DbSet<Card> Cards { get; set; }
         public virtual DbSet<CategorisationRule> CategorisationRules { get; set; }
         public virtual DbSet<Category> Categories { get; set; }

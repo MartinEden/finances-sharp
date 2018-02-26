@@ -153,9 +153,12 @@
     <Compile Include="Helpers\ModelBindingHelpers.cs" />
     <Compile Include="Helpers\RouteValueDictionaryExtensions.cs" />
     <Compile Include="Helpers\SubstExpressionVisitor.cs" />
+    <Content Include="Migrations\20180224_1603_AddBudget.sql" />
+    <Compile Include="Models\BudgetItem.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\CategorisationRule.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\EmptyInitializer.cs" />
     <Compile Include="Models\Exclusion.cs" />
     <Compile Include="Models\FinanceDb.cs" />
     <Compile Include="Models\IHasId.cs" />
