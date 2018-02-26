@@ -288,6 +288,7 @@
     <Content Include="Scripts\TimeSeriesChart.js" />
     <Content Include="Scripts\tree-select.js" />
     <Content Include="Views\Budget\Index.cshtml" />
+    <Content Include="Views\Home\EditorTemplates\CategoryFancyBox.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -322,7 +323,6 @@
     <Content Include="Views\Home\DisplayTemplates\Card.cshtml" />
     <Content Include="Views\Home\DisplayTemplates\ShortTransaction.cshtml" />
     <Content Include="Views\Home\DisplayTemplates\Transaction.cshtml" />
-    <Content Include="Views\Home\EditorTemplates\CategoryFancyBox.cshtml" />
     <Content Include="Views\Home\EditorTemplates\NameBox.cshtml" />
     <Content Include="Views\Home\EditorTemplates\SearchForm.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />

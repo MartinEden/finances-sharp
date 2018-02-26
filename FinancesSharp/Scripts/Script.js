@@ -6,8 +6,8 @@
     $.ajax("/Category/All", {
         dataType: "json",
         success: function (categories) {
-            selectors.push(new TreeSelect($(".category-box-no-new"), categories));
-            var selector = new TreeSelect($(".category-box"), categories);
+            selectors.push(new TreeSelect(".category-box-no-new", categories));
+            var selector = new TreeSelect(".category-box", categories);
             selectors.push(selector);
             var button = $("<button></button>").text("Add new category");
             selector.element.append(button);

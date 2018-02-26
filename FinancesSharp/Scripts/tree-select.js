@@ -3,7 +3,7 @@
 // must have a 'name' property, which is displayed in the selector, and a
 // 'children' property, which should either be an empty array, or an array
 // containing more nested objects of the same format.
-function TreeSelect(elements, data, settings) {
+function TreeSelect(jqSelector, data, settings) {
 	var tree = this;
 
 	this.nodes = [];
@@ -29,10 +29,13 @@ function TreeSelect(elements, data, settings) {
 	});
 	$("body").append(this.element);
 
-    elements
-        .find("input.text")
-		.focus(function() { tree.clicked($(this).parent());	})
-		.blur(function() { tree.blur(); })
+    jqSelector += " input.text";
+    $(document).on("focus", jqSelector, function() { 
+        tree.clicked($(this).parent());	
+    });
+    $(document).on("blur", jqSelector, function() {
+        tree.blur();
+    });
 	this.element.find("*")
 		.attr("tabindex", 1000)
 		.blur(function() { tree.blur(); })
@@ -41,7 +44,7 @@ function TreeSelect(elements, data, settings) {
 TreeSelect.prototype.makeChild = function(data) {
     var node = new TreeSelect_Node(data, this.list, this, 0);
     this.nodes.push(node);
-}
+};
 TreeSelect.prototype.clicked = function(section) {
 	var tree = this;
 	this.field = section.find("input.text");
