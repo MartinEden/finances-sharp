@@ -1,6 +1,6 @@
 ﻿$(function () {
     $('.datepicker input').datepicker({ dateFormat: 'dd/mm/yy' });
-    var selectors = []
+    var selectors = [];
     
     // Setup category editing
     $.ajax("/Category/All", {

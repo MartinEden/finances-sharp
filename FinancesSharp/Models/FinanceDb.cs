@@ -46,6 +46,21 @@ namespace FinancesSharp.Models
                 return Categories.Include(x => x.Parent).Where(c => c.Parent == null);
             }
         }
+
+        // Later we might add the functionality to create multiple budgets
+        // or introduce versioned budgets. For now, let's just have one default
+        // budget
+        public Budget GetOrCreateDefaultBudget()
+        {
+            var budget = Budgets.SingleOrDefault();
+            if (budget == null)
+            {
+                budget = new Budget();
+                Budgets.Add(budget);
+                SaveChanges();
+            }
+            return budget;
+        }
         
         public void Backup()
         {

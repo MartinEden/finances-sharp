@@ -1,0 +1,69 @@
+﻿@model FinancesSharp.Models.Budget
+
+@{
+    ViewBag.Title = "Budget";
+}
+
+<script type="text/javascript">
+    var budgetId = @Model.Id;
+
+    function makeBudgetItem(item) {
+        var element = $("#exemplars .budget-item")
+            .clone();
+        element.find(".name").text(item.Name);
+        element.find(".amount").text("£" + item.BudgetedAmount);
+        element.find(".categories").text(item.Categories.map(x => x.Name));
+        return element;
+    }
+
+    function refreshBudget() {
+        $.getJSON("/Budget/Get/" + budgetId,
+            function(budget) {
+                var container = $(".budget-items");
+                container.empty();
+                budget.Items.forEach(function(item) {
+                    container.append(makeBudgetItem(item));
+                });
+            });
+    }
+
+    $(function() {
+        refreshBudget();
+
+        var form = $(".new-budget-item form");
+        form.submit(function(e) {
+            e.preventDefault();
+            form.find(".errors").empty();
+            $.post(form.attr("action"), form.serialize())
+                .done(refreshBudget)
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    var message = jqXHR.responseJSON.join(". ");
+                    form.find(".errors").text(message);
+                });
+        });
+    });
+</script>
+
+<div class="budget-items"></div>
+<div class="new-budget-item">
+    <h2>Add a new budget item</h2>
+    <form method="post" action="@Url.Action("CreateBudgetItem", new { Model.Id })">
+        <input type="text" name="Name" placeholder="Name"/>
+        <input type="number" 
+               name="BudgetedAmount" 
+               placeholder="Budgeted amount (£)"
+               step="0.01" />
+        <button type="submit">Add</button>
+        <div class="errors">
+            
+        </div>
+    </form>
+</div>
+
+<div id="exemplars" style="display: none">
+    <div class="budget-item">
+        <h2 class="name"></h2>
+        <div class="amount"></div>
+        <div class="categories"></div>
+    </div>
+</div>
