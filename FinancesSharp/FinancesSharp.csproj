@@ -159,6 +159,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Migrations\20180224_1603_AddBudget.sql" />
+    <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\BudgetItem.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\CategorisationRule.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Reports\OutgoingsByCategory.cs" />
     <Compile Include="Reports\Report.cs" />
     <Compile Include="Reports\UnusualSpendingByCategory.cs" />
+    <Compile Include="ViewModels\BudgetViewModel.cs" />
     <Compile Include="ViewModels\CategoryToBudgetItemViewModel.cs" />
     <Compile Include="ViewModels\CategorisationForm.cs" />
     <Compile Include="ViewModels\CategoryTree.cs" />

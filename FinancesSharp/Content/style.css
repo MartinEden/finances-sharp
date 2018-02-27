@@ -275,12 +275,11 @@ th:hover .sort-arrow {
     visibility: visible;
 }
 
-.budget .budget-item .categories {
-    max-width: 500px;
+.budget .categories {
     margin: 5px 0;
 }
 
-.budget .budget-item .categories .category {
+.budget .categories .category {
     display: inline-block;
     border: 1px solid rgb(180, 180, 180);
     background-color: white;
@@ -290,12 +289,12 @@ th:hover .sort-arrow {
     margin-top: 5px;
     cursor: pointer;
 }
-.budget .budget-item .categories .category:hover {
+.budget .categories .category:hover {
     background-color: rgb(242, 235, 251);
     text-decoration: line-through;
 }
 
-.budget .budget-item .categories .add-category {
+.budget .categories .add-category {
     margin-right: 5px;
     margin-top: 5px;
     display: inline-block;

@@ -1,5 +1,6 @@
 ﻿CREATE TABLE `Budgets` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `MiscellaneousBudget` DECIMAL(18,2) NOT NULL DEFAULT 0,
   PRIMARY KEY (`Id`)
 );
 

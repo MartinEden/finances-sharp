@@ -30,15 +30,17 @@
         var element = $("#exemplars .category")
             .clone();
         element.text(category.Name);
-        element.click(function() {
-            var data = {
-                ItemId: itemId,
-                CategoryId: category.Id
-            };
-            $.post(removeCategoryUrl, data)
-                .done(function() { element.remove(); })
-                .fail(genericError);
-        });
+        if (itemId != null) {
+            element.click(function() {
+                var data = {
+                    ItemId: itemId,
+                    CategoryId: category.Id
+                };
+                $.post(removeCategoryUrl, data)
+                    .done(function() { element.remove(); })
+                    .fail(genericError);
+            });
+        }
         return element;
     }
 
@@ -81,7 +83,7 @@
         element.find(".amount").text("£" + item.BudgetedAmount);
         var categories = element.find(".categories");
         item.Categories.forEach(function(category) {
-            categories.prepend(makeCategory(item.Id, category));
+            categories.append(makeCategory(item.Id, category));
         });
         element.find(".id").val(item.Id);
         var form = element.find("form");
@@ -89,15 +91,28 @@
         element.find(".remove-link a").click(deleteBudgetItem(element, item));
         return element;
     }
+    
+    function makeMiscellaneousBudgetItem(budgetViewModel) {
+        var element = $("#exemplars .misc-budget-item")
+            .clone();
+        element.find(".name").text("Miscellaneous spending");
+        element.find(".amount").text("£" + budgetViewModel.Budget.MiscellaneousBudget);
+        var categories = element.find(".categories");
+        budgetViewModel.SpareCategories.forEach(function(category) {
+            categories.append(makeCategory(null, category));
+        });
+        return element;
+    }
 
     function refreshBudget() {
         $.getJSON("/Budget/Get/" + budgetId,
-            function(budget) {
+            function(budgetViewModel) {
                 var container = $(".budget-items");
                 container.empty();
-                budget.Items.forEach(function(item) {
+                budgetViewModel.Budget.Items.forEach(function(item) {
                     container.append(makeBudgetItem(item));
                 });
+                container.append(makeMiscellaneousBudgetItem(budgetViewModel));
             });
     }
     
@@ -155,6 +170,12 @@
                     <span class="errors"></span>
                 </form>
             </div>
+        </div>
+        
+        <div class="misc-budget-item">
+            <div class="name-row"><h2 class="name"></h2></div>
+            <div class="amount"></div>
+            <div class="categories"></div>
         </div>
 
         <div class="category"></div>

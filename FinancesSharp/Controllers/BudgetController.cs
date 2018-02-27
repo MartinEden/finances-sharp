@@ -17,7 +17,8 @@ namespace FinancesSharp.Controllers
         public ActionResult Get(int id)
         {
             var budget = GetBudget(id);
-            return Json(budget.Flatten(), JsonRequestBehavior.AllowGet);
+            var viewModel = new BudgetViewModel(budget, Db);
+            return Json(viewModel.Flatten(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
