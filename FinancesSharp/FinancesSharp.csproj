@@ -188,6 +188,7 @@
     <Compile Include="Reports\OutgoingsByCategory.cs" />
     <Compile Include="Reports\Report.cs" />
     <Compile Include="Reports\UnusualSpendingByCategory.cs" />
+    <Compile Include="ViewModels\AddCategoryToBudgetItem.cs" />
     <Compile Include="ViewModels\CategorisationForm.cs" />
     <Compile Include="ViewModels\CategoryTree.cs" />
     <Compile Include="ViewModels\ChangeCategoryResult.cs" />

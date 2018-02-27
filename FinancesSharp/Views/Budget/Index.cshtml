@@ -15,13 +15,16 @@
         element.find(".categories").text(item.Categories.map(x => x.Name));
         element.find(".id").val(item.Id);
         var form = element.find("form");
-        form.submit(function() {
+        form.submit(function(e) {
             e.preventDefault();
             form.find(".errors").empty();
             $.post(form.attr("action"), form.serialize())
                 .done(refreshBudget)
-                .fail(function(jqXHR, textStatus, errorThrown) {
-                    var message = jqXHR.responseJSON.join(". ");
+                .fail(function(jqXhr, textStatus, errorThrown) {
+                    var message = textStatus;
+                    if (jqXhr.responseJSON) {
+                        message = jqXhr.responseJSON.join(". ");
+                    }
                     form.find(".errors").text(message);
                 });
         });
@@ -84,8 +87,9 @@
             <form method="post" action="@Url.Action("AddCategory", new {Model.Id})" style="display: inline-block;">
                 <input class="id" type="hidden" name="ItemId" />
                 <span class="category-box">
-                    <input type="text" class="text" value="" onchange="this.submit();" />
-                    <input type="hidden" class="value" name="category" id="" value="" />
+                    <input type="text" class="text" value="" />
+                    <input type="hidden" class="value" name="CategoryId" 
+                           onchange="$(this).closest('form').submit();" />
                     <input type="hidden" class="previous-text" value="" />
                 </span>
                 <div class="errors"></div>

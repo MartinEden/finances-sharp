@@ -72,5 +72,14 @@ namespace FinancesSharp.Models
                 return trx => cats.Contains(trx.Category.Id);
             }
         }
+
+        public object Flatten()
+        {
+            return new
+            {
+                Id,
+                Name
+            };
+        }
     }
 }
