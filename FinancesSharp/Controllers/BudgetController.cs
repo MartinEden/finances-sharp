@@ -38,6 +38,21 @@ namespace FinancesSharp.Controllers
         }
 
         [HttpPost]
+        public ActionResult DeleteBudgetItem(int id, int itemId)
+        {
+            var budget = GetBudget(id);
+            var item = budget.Items.SingleOrDefault(x => x.Id == itemId);
+            if (item != null)
+            {
+                budget.Items.Remove(item);
+                Db.SaveChanges();
+                return Json("OK");
+            }
+            Response.StatusCode = 400;
+            return Json($"Unknown budget item {itemId}");
+        }
+
+        [HttpPost]
         public ActionResult AddCategory(int id, CategoryToBudgetItemViewModel viewModel)
         {
             return WithCategoryAndBudgetItem(id, viewModel, (budget, item, category) =>

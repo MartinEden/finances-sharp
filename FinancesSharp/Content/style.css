@@ -258,6 +258,19 @@ th:hover .sort-arrow {
     opacity: 1;
 }
 
+.budget .budget-item .name-row h2 {
+    display: inline-block;
+}
+
+.budget .budget-item .name-row .remove-link {
+    display: inline-block;
+    margin-left: 5px;
+    visibility: hidden;
+}
+.budget .budget-item .name-row:hover .remove-link {
+    visibility: visible;
+}
+
 .budget .budget-item .categories {
     max-width: 500px;
     margin: 5px 0;

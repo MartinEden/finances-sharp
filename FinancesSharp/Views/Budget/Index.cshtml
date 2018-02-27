@@ -6,8 +6,9 @@
 
 <script type="text/javascript">
     var budgetId = @Model.Id;
-    var deleteUrl = "@Url.Action("RemoveCategory", new {Model.Id})";
-    
+    var removeCategoryUrl = "@Url.Action("RemoveCategory", new {Model.Id})";
+    var deleteBudgetItemUrl = "@Url.Action("DeleteBudgetItem", new {Model.Id})";
+
     function submitForm(form, success) {
         return function(event) {
             event.preventDefault();
@@ -23,7 +24,7 @@
                 });
         };
     }
-    
+
     function makeCategory(itemId, category) {
         var element = $("#exemplars .category")
             .clone();
@@ -33,10 +34,8 @@
                 ItemId: itemId,
                 CategoryId: category.Id
             };
-            $.post(deleteUrl, data)
-                .done(function() {
-                    element.remove();
-                })
+            $.post(removeCategoryUrl, data)
+                .done(function() { element.remove(); })
                 .fail(function(jqXhr, textStatus) {
                     alert(jqXhr.responseText);
                 });
@@ -56,6 +55,15 @@
         element.find(".id").val(item.Id);
         var form = element.find("form");
         form.submit(submitForm(form, refreshBudget));
+        element.find(".remove-link a").click(function(e) {
+            e.preventDefault();
+            var data = { itemId: item.Id };
+            $.post(deleteBudgetItemUrl, data)
+                .done(function() { element.remove(); })
+                .fail(function(jqXhr, textStatus) {
+                    alert(jqXhr.responseText);
+                });
+        });
         return element;
     }
 
@@ -84,39 +92,44 @@
     </div>
     <div class="new-budget-item">
         <h2>Add a new budget item</h2>
-        <form method="post" action="@Url.Action("CreateBudgetItem", new { Model.Id })">
+        <form method="post" action="@Url.Action("CreateBudgetItem", new {Model.Id})">
             <input type="text" name="Name" placeholder="Name"/>
-            <input type="number" 
-                   name="BudgetedAmount" 
+            <input type="number"
+                   name="BudgetedAmount"
                    placeholder="Budgeted amount (£)"
-                   step="0.01" />
+                   step="0.01"/>
             <button type="submit">Add</button>
             <div class="errors">
-            
+
             </div>
         </form>
     </div>
 
     <div id="exemplars" style="display: none">
         <div class="budget-item">
-            <h2 class="name"></h2>
+            <div class="name-row">
+                <h2 class="name"></h2>
+                <div class="remove-link">
+                    <a href="#">Delete</a>
+                </div>
+            </div>
             <div class="amount"></div>
             <div class="categories">
-                <form class="add-category" 
-                      method="post" 
+                <form class="add-category"
+                      method="post"
                       action="@Url.Action("AddCategory", new {Model.Id})">
-                    <input class="id" type="hidden" name="ItemId" />
+                    <input class="id" type="hidden" name="ItemId"/>
                     <span class="category-box">
-                        <input type="text" class="text" value="" />
-                        <input type="hidden" class="value" name="CategoryId" 
-                               onchange="$(this).closest('form').submit();" />
-                        <input type="hidden" class="previous-text" value="" />
+                        <input type="text" class="text" value=""/>
+                        <input type="hidden" class="value" name="CategoryId"
+                               onchange="$(this).closest('form').submit();"/>
+                        <input type="hidden" class="previous-text" value=""/>
                     </span>
                     <span class="errors"></span>
                 </form>
             </div>
         </div>
-    
+
         <div class="category"></div>
     </div>
 </div>
