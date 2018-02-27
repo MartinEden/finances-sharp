@@ -6,6 +6,22 @@
 
 <script type="text/javascript">
     var budgetId = @Model.Id;
+    
+    function submitForm(form, success) {
+        return function(event) {
+            event.preventDefault();
+            form.find(".errors").empty();
+            $.post(form.attr("action"), form.serialize())
+                .done(success)
+                .fail(function(jqXhr, textStatus, errorThrown) {
+                    var message = textStatus;
+                    if (jqXhr.responseJSON) {
+                        message = jqXhr.responseJSON.join(". ");
+                    }
+                    form.find(".errors").text(message);
+                });
+        };
+    }
 
     function makeBudgetItem(item) {
         var element = $("#exemplars .budget-item")
@@ -15,19 +31,7 @@
         element.find(".categories").text(item.Categories.map(x => x.Name));
         element.find(".id").val(item.Id);
         var form = element.find("form");
-        form.submit(function(e) {
-            e.preventDefault();
-            form.find(".errors").empty();
-            $.post(form.attr("action"), form.serialize())
-                .done(refreshBudget)
-                .fail(function(jqXhr, textStatus, errorThrown) {
-                    var message = textStatus;
-                    if (jqXhr.responseJSON) {
-                        message = jqXhr.responseJSON.join(". ");
-                    }
-                    form.find(".errors").text(message);
-                });
-        });
+        form.submit(submitForm(form, refreshBudget));
         return element;
     }
 
@@ -46,16 +50,7 @@
         refreshBudget();
 
         var form = $(".new-budget-item form");
-        form.submit(function(e) {
-            e.preventDefault();
-            form.find(".errors").empty();
-            $.post(form.attr("action"), form.serialize())
-                .done(refreshBudget)
-                .fail(function(jqXHR, textStatus, errorThrown) {
-                    var message = jqXHR.responseJSON.join(". ");
-                    form.find(".errors").text(message);
-                });
-        });
+        form.submit(submitForm(form, refreshBudget));
     });
 </script>
 

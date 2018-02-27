@@ -54,7 +54,10 @@ namespace FinancesSharp.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    item.Categories.Add(category);
+                    foreach (var cat in category.Children)
+                    {
+                        item.Categories.Add(cat);
+                    }
                     Db.SaveChanges();
                     return Json("OK");
                 }
