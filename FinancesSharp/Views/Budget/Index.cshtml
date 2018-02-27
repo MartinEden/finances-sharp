@@ -6,6 +6,7 @@
 
 <script type="text/javascript">
     var budgetId = @Model.Id;
+    var deleteUrl = "@Url.Action("RemoveCategory", new {Model.Id})";
     
     function submitForm(form, success) {
         return function(event) {
@@ -22,13 +23,36 @@
                 });
         };
     }
+    
+    function makeCategory(itemId, category) {
+        var element = $("#exemplars .category")
+            .clone();
+        element.text(category.Name);
+        element.click(function() {
+            var data = {
+                ItemId: itemId,
+                CategoryId: category.Id
+            };
+            $.post(deleteUrl, data)
+                .done(function() {
+                    element.remove();
+                })
+                .fail(function(jqXhr, textStatus) {
+                    alert(jqXhr.responseText);
+                });
+        });
+        return element;
+    }
 
     function makeBudgetItem(item) {
         var element = $("#exemplars .budget-item")
             .clone();
         element.find(".name").text(item.Name);
         element.find(".amount").text("£" + item.BudgetedAmount);
-        element.find(".categories").text(item.Categories.map(x => x.Name));
+        var categories = element.find(".categories");
+        item.Categories.forEach(function(category) {
+            categories.prepend(makeCategory(item.Id, category));
+        });
         element.find(".id").val(item.Id);
         var form = element.find("form");
         form.submit(submitForm(form, refreshBudget));
@@ -54,41 +78,45 @@
     });
 </script>
 
-<div class="budget-items">
-    <img src="@Url.Content("~/Content/spinner.gif")"/>
-</div>
-<div class="new-budget-item">
-    <h2>Add a new budget item</h2>
-    <form method="post" action="@Url.Action("CreateBudgetItem", new { Model.Id })">
-        <input type="text" name="Name" placeholder="Name"/>
-        <input type="number" 
-               name="BudgetedAmount" 
-               placeholder="Budgeted amount (£)"
-               step="0.01" />
-        <button type="submit">Add</button>
-        <div class="errors">
+<div class="budget">
+    <div class="budget-items">
+        <img src="@Url.Content("~/Content/spinner.gif")"/>
+    </div>
+    <div class="new-budget-item">
+        <h2>Add a new budget item</h2>
+        <form method="post" action="@Url.Action("CreateBudgetItem", new { Model.Id })">
+            <input type="text" name="Name" placeholder="Name"/>
+            <input type="number" 
+                   name="BudgetedAmount" 
+                   placeholder="Budgeted amount (£)"
+                   step="0.01" />
+            <button type="submit">Add</button>
+            <div class="errors">
             
-        </div>
-    </form>
-</div>
+            </div>
+        </form>
+    </div>
 
-<div id="exemplars" style="display: none">
-    <div class="budget-item">
-        <h2 class="name"></h2>
-        <div class="amount"></div>
-        <div>
-            <span class="categories"></span>
-            Add category: 
-            <form method="post" action="@Url.Action("AddCategory", new {Model.Id})" style="display: inline-block;">
-                <input class="id" type="hidden" name="ItemId" />
-                <span class="category-box">
-                    <input type="text" class="text" value="" />
-                    <input type="hidden" class="value" name="CategoryId" 
-                           onchange="$(this).closest('form').submit();" />
-                    <input type="hidden" class="previous-text" value="" />
-                </span>
-                <div class="errors"></div>
-            </form>
+    <div id="exemplars" style="display: none">
+        <div class="budget-item">
+            <h2 class="name"></h2>
+            <div class="amount"></div>
+            <div class="categories">
+                <form class="add-category" 
+                      method="post" 
+                      action="@Url.Action("AddCategory", new {Model.Id})">
+                    <input class="id" type="hidden" name="ItemId" />
+                    <span class="category-box">
+                        <input type="text" class="text" value="" />
+                        <input type="hidden" class="value" name="CategoryId" 
+                               onchange="$(this).closest('form').submit();" />
+                        <input type="hidden" class="previous-text" value="" />
+                    </span>
+                    <span class="errors"></span>
+                </form>
+            </div>
         </div>
+    
+        <div class="category"></div>
     </div>
 </div>

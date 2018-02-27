@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using FinancesSharp.Models;
 using FinancesSharp.ViewModels;
@@ -15,14 +16,14 @@ namespace FinancesSharp.Controllers
         
         public ActionResult Get(int id)
         {
-            var budget = getBudget(id);
+            var budget = GetBudget(id);
             return Json(budget.Flatten(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult CreateBudgetItem(int id, NewBudgetItem newItem)
         {
-            var budget = getBudget(id);
+            var budget = GetBudget(id);
             if (TryValidateModel(newItem))
             {
                 budget.Items.Add(new BudgetItem
@@ -33,13 +34,39 @@ namespace FinancesSharp.Controllers
                 Db.SaveChanges();
                 return Json("OK");
             }
-            return validationErrorsAsJson();
+            return ValidationErrorsAsJson();
         }
 
         [HttpPost]
-        public ActionResult AddCategory(int id, AddCategoryToBudgetItem viewModel)
+        public ActionResult AddCategory(int id, CategoryToBudgetItemViewModel viewModel)
         {
-            var budget = getBudget(id);
+            return WithCategoryAndBudgetItem(id, viewModel, (budget, item, category) =>
+            {
+                foreach (var cat in category.Children)
+                {
+                    item.Categories.Add(cat);
+                }
+                Db.SaveChanges();
+                return Json("OK");
+            });
+        }
+
+        [HttpPost]
+        public ActionResult RemoveCategory(int id, CategoryToBudgetItemViewModel viewModel)
+        {
+            return WithCategoryAndBudgetItem(id, viewModel, (budget, item, category) =>
+            {
+                item.Categories.Remove(category);
+                Db.SaveChanges();
+                return Json("OK");
+            });
+        }
+
+        private ActionResult WithCategoryAndBudgetItem(int budgetId, 
+            CategoryToBudgetItemViewModel viewModel, 
+            Func<Budget, BudgetItem, Category, ActionResult> work)
+        {
+            var budget = GetBudget(budgetId);
             if (TryValidateModel(viewModel))
             {
                 var item = budget.Items.SingleOrDefault(x => x.Id == viewModel.ItemId);
@@ -54,23 +81,18 @@ namespace FinancesSharp.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    foreach (var cat in category.Children)
-                    {
-                        item.Categories.Add(cat);
-                    }
-                    Db.SaveChanges();
-                    return Json("OK");
+                    return work(budget, item, category);
                 }
             }
-            return validationErrorsAsJson();
+            return ValidationErrorsAsJson();
         }
 
-        private Budget getBudget(int id)
+        private Budget GetBudget(int id)
         {
             return Db.Budgets.Single(x => x.Id == id);
         }
 
-        private ActionResult validationErrorsAsJson()
+        private ActionResult ValidationErrorsAsJson()
         {
             Response.StatusCode = 400;
             return Json(ModelState.Values
