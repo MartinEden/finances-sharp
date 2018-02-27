@@ -8,6 +8,7 @@
     var budgetId = @Model.Id;
     var removeCategoryUrl = "@Url.Action("RemoveCategory", new {Model.Id})";
     var deleteBudgetItemUrl = "@Url.Action("DeleteBudgetItem", new {Model.Id})";
+    var restoreBudgetItemUrl = "@Url.Action("RestoreBudgetItem", new {Model.Id})";
 
     function submitForm(form, success) {
         return function(event) {
@@ -36,11 +37,41 @@
             };
             $.post(removeCategoryUrl, data)
                 .done(function() { element.remove(); })
-                .fail(function(jqXhr, textStatus) {
-                    alert(jqXhr.responseText);
-                });
+                .fail(genericError);
         });
         return element;
+    }
+
+    function makeUndoLink(callback) {
+        var element = $("#exemplars .undo-link")
+            .clone();
+        element.click(function(e) {
+            e.preventDefault();
+            callback();
+        });
+        return element;
+    }
+    
+    function restoreBudgetItem(item) {
+        return function() {
+            var data = { itemId: item.Id };
+            $.post(restoreBudgetItemUrl, data)
+                .done(refreshBudget)
+                .fail(genericError);
+        }
+    }
+    
+    function deleteBudgetItem(element, item) {
+        return function(e) {
+            e.preventDefault();
+            var data = { itemId: item.Id };
+            $.post(deleteBudgetItemUrl, data)
+                .done(function() {
+                    element.empty();
+                    element.append(makeUndoLink(restoreBudgetItem(item)));
+                })
+                .fail(genericError);
+        };
     }
 
     function makeBudgetItem(item) {
@@ -55,15 +86,7 @@
         element.find(".id").val(item.Id);
         var form = element.find("form");
         form.submit(submitForm(form, refreshBudget));
-        element.find(".remove-link a").click(function(e) {
-            e.preventDefault();
-            var data = { itemId: item.Id };
-            $.post(deleteBudgetItemUrl, data)
-                .done(function() { element.remove(); })
-                .fail(function(jqXhr, textStatus) {
-                    alert(jqXhr.responseText);
-                });
-        });
+        element.find(".remove-link a").click(deleteBudgetItem(element, item));
         return element;
     }
 
@@ -77,6 +100,10 @@
                 });
             });
     }
+    
+    function genericError(jqXhr, errorMessage) {
+        alert(jqXhr.responseText);
+    }
 
     $(function() {
         refreshBudget();
@@ -87,9 +114,6 @@
 </script>
 
 <div class="budget">
-    <div class="budget-items">
-        <img src="@Url.Content("~/Content/spinner.gif")"/>
-    </div>
     <div class="new-budget-item">
         <h2>Add a new budget item</h2>
         <form method="post" action="@Url.Action("CreateBudgetItem", new {Model.Id})">
@@ -103,6 +127,9 @@
 
             </div>
         </form>
+    </div>
+    <div class="budget-items">
+        <img src="@Url.Content("~/Content/spinner.gif")"/>
     </div>
 
     <div id="exemplars" style="display: none">
@@ -131,5 +158,8 @@
         </div>
 
         <div class="category"></div>
+        <div class="undo-link">
+            <a href="#">Undo</a>
+        </div>
     </div>
 </div>

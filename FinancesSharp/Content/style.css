@@ -262,6 +262,10 @@ th:hover .sort-arrow {
     display: inline-block;
 }
 
+.budget .budget-item .undo-link {
+    margin: 10px 0;
+}
+
 .budget .budget-item .name-row .remove-link {
     display: inline-block;
     margin-left: 5px;

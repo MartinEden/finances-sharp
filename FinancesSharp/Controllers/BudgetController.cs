@@ -51,6 +51,21 @@ namespace FinancesSharp.Controllers
             Response.StatusCode = 400;
             return Json($"Unknown budget item {itemId}");
         }
+        
+        [HttpPost]
+        public ActionResult RestoreBudgetItem(int id, int itemId)
+        {
+            var budget = GetBudget(id);
+            var item = Db.BudgetItems.SingleOrDefault(x => x.Id == itemId);
+            if (item != null)
+            {
+                budget.Items.Add(item);
+                Db.SaveChanges();
+                return Json("OK");
+            }
+            Response.StatusCode = 400;
+            return Json($"Unknown budget item {itemId}");
+        }
 
         [HttpPost]
         public ActionResult AddCategory(int id, CategoryToBudgetItemViewModel viewModel)
