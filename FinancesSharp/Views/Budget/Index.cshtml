@@ -15,7 +15,11 @@
             event.preventDefault();
             form.find(".errors").empty();
             $.post(form.attr("action"), form.serialize())
-                .done(success)
+                .done(function() {
+                    var pos = form.offset();
+                    $(".success-fader").show().css(pos).fadeOut();
+                    success();
+                })
                 .fail(function(jqXhr, textStatus, errorThrown) {
                     var message = textStatus;
                     if (jqXhr.responseJSON) {
@@ -129,6 +133,7 @@
     });
 </script>
 
+<div class="success-fader">Saved</div>
 <div class="budget">
     <div class="new-budget-item">
         <h2>Add a new budget item</h2>
@@ -147,6 +152,7 @@
     <div class="budget-items">
         <img src="@Url.Content("~/Content/spinner.gif")"/>
     </div>
+        
 
     <div id="exemplars" style="display: none">
         <div class="budget-item">

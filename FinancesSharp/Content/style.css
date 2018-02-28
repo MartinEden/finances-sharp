@@ -299,3 +299,22 @@ th:hover .sort-arrow {
     margin-top: 5px;
     display: inline-block;
 }
+
+form {
+    position: relative;
+}
+
+.success-fader {
+    display: none;
+    position: absolute;
+    width: 60px;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    height: 15px;
+    padding: 5px;
+    color: white;
+    background-color: green;
+    border-radius: 5px;
+    z-index: 10;
+}
