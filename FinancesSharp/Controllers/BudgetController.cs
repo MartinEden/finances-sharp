@@ -39,6 +39,28 @@ namespace FinancesSharp.Controllers
         }
 
         [HttpPost]
+        public ActionResult UpdateBudgetItem(int id, UpdateBudgetItem viewModel)
+        {
+            var budget = GetBudget(id);
+            if (TryValidateModel(viewModel))
+            {
+                var item = budget.Items.SingleOrDefault(x => x.Id == viewModel.ItemId);
+                if (item != null)
+                {
+                    item.Name = viewModel.Name;
+                    item.BudgetedAmount = viewModel.BudgetedAmount;
+                    Db.SaveChanges();
+                    return Json("OK");
+                }
+                else
+                {
+                    ModelState.AddModelError("ItemId", $"Unknown item '{viewModel.ItemId}'");
+                }
+            }
+            return ValidationErrorsAsJson();
+        }
+
+        [HttpPost]
         public ActionResult DeleteBudgetItem(int id, int itemId)
         {
             var budget = GetBudget(id);

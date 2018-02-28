@@ -10,8 +10,8 @@
     var deleteBudgetItemUrl = "@Url.Action("DeleteBudgetItem", new {Model.Id})";
     var restoreBudgetItemUrl = "@Url.Action("RestoreBudgetItem", new {Model.Id})";
 
-    function submitForm(form, success) {
-        return function(event) {
+    function makeAjaxForm(form, success) {
+        form.submit(function(event) {
             event.preventDefault();
             form.find(".errors").empty();
             $.post(form.attr("action"), form.serialize())
@@ -23,7 +23,7 @@
                     }
                     form.find(".errors").text(message);
                 });
-        };
+        });
     }
 
     function makeCategory(itemId, category) {
@@ -79,15 +79,18 @@
     function makeBudgetItem(item) {
         var element = $("#exemplars .budget-item")
             .clone();
-        element.find(".name").text(item.Name);
-        element.find(".amount").text("£" + item.BudgetedAmount);
+        element.find(".name").val(item.Name);
+        element.find(".amount").val(item.BudgetedAmount);
         var categories = element.find(".categories");
         item.Categories.forEach(function(category) {
             categories.append(makeCategory(item.Id, category));
         });
         element.find(".id").val(item.Id);
-        var form = element.find("form");
-        form.submit(submitForm(form, refreshBudget));
+        makeAjaxForm(element.find("form.add-category"), refreshBudget);
+        makeAjaxForm(element.find("form.update-item"), refreshBudget);
+        element.find(".fancy-box input").blur(function() {
+            $(this).closest("form").submit();
+        });
         element.find(".remove-link a").click(deleteBudgetItem(element, item));
         return element;
     }
@@ -122,9 +125,7 @@
 
     $(function() {
         refreshBudget();
-
-        var form = $(".new-budget-item form");
-        form.submit(submitForm(form, refreshBudget));
+        makeAjaxForm($(".new-budget-item form"), refreshBudget);
     });
 </script>
 
@@ -149,13 +150,25 @@
 
     <div id="exemplars" style="display: none">
         <div class="budget-item">
-            <div class="name-row">
-                <h2 class="name"></h2>
-                <div class="remove-link">
-                    <a href="#">Delete</a>
+            <form class="update-item"
+                  method="post"
+                  action="@Url.Action("UpdateBudgetItem", new {Model.Id})">
+                <input class="id" type="hidden" name="ItemId" />
+                <div class="name-row">
+                    <h2 class="fancy-box">
+                        <input class="name" name="Name" type="text" />
+                    </h2>
+                    <div class="remove-link">
+                        <a href="#">Delete</a>
+                    </div>
                 </div>
-            </div>
-            <div class="amount"></div>
+                <div class="fancy-box">
+                    £<input 
+                         class="amount" 
+                         name="BudgetedAmount" 
+                         style="width: 100px;" />
+                </div>
+            </form>
             <div class="categories">
                 <form class="add-category"
                       method="post"
