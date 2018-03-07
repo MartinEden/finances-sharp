@@ -203,6 +203,7 @@
     <Compile Include="ViewModels\TransactionSortMode.cs" />
     <Compile Include="ViewModels\StaleRulesViewModel.cs" />
     <Compile Include="ViewModels\UpdateBudgetItem.cs" />
+    <Compile Include="ViewModels\UpdateMiscellaneousBudgetViewModel.cs" />
     <Compile Include="ViewModels\UploadTransactionsResult.cs" />
     <Compile Include="Helpers\ConnectionStringHelper.cs" />
     <Compile Include="Models\BackupMechanism.cs" />

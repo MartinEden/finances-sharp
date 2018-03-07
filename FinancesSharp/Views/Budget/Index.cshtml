@@ -103,10 +103,14 @@
         var element = $("#exemplars .misc-budget-item")
             .clone();
         element.find(".name").text("Miscellaneous spending");
-        element.find(".amount").text("£" + budgetViewModel.Budget.MiscellaneousBudget);
+        element.find(".amount").val(budgetViewModel.Budget.MiscellaneousBudget);
         var categories = element.find(".categories");
         budgetViewModel.SpareCategories.forEach(function(category) {
             categories.append(makeCategory(null, category));
+        });
+        makeAjaxForm(element.find("form.update-misc-budget"), refreshBudget);
+        element.find(".fancy-box input").blur(function() {
+            $(this).closest("form").submit();
         });
         return element;
     }
@@ -193,7 +197,16 @@
         
         <div class="misc-budget-item">
             <div class="name-row"><h2 class="name"></h2></div>
-            <div class="amount"></div>
+            <form class="update-misc-budget" method="post"
+                action="@Url.Action("UpdateMiscBudgetAmount", new {Model.Id})">
+                <div class="fancy-box">
+                    £<input 
+                         class="amount" 
+                         name="MiscellaneousBudget" 
+                         style="width: 100px;" />
+                </div>
+                <div class="errors"></div>
+            </form>
             <div class="categories"></div>
         </div>
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using FinancesSharp.Models;
@@ -19,6 +20,19 @@ namespace FinancesSharp.Controllers
             var budget = GetBudget(id);
             var viewModel = new BudgetViewModel(budget, Db);
             return Json(viewModel.Flatten(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateMiscBudgetAmount(int id, UpdateMiscellaneousBudgetViewModel viewModel)
+        {
+            var budget = GetBudget(id);
+            if (TryValidateModel(viewModel))
+            {
+                budget.MiscellaneousBudget = viewModel.MiscellaneousBudget;
+                Db.SaveChanges();
+                return Json("OK");
+            }
+            return ValidationErrorsAsJson();
         }
 
         [HttpPost]
