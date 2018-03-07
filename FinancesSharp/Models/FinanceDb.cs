@@ -13,9 +13,13 @@ namespace FinancesSharp.Models
     {
         public FinanceDb()
         {
-            Database.SetInitializer<FinanceDb>(new DropCreateDatabaseIfModelChanges<FinanceDb>());
+            Database.SetInitializer(new EmptyInitializer());
+            //Database.SetInitializer<FinanceDb>(new CreateDatabaseIfNotExists<FinanceDb>());
+            //Database.SetInitializer<FinanceDb>(new DropCreateDatabaseIfModelChanges<FinanceDb>());
         }
-
+        
+        public virtual DbSet<Budget> Budgets { get; set; }
+        public virtual DbSet<BudgetItem> BudgetItems { get; set; }
         public virtual DbSet<Card> Cards { get; set; }
         public virtual DbSet<CategorisationRule> CategorisationRules { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
@@ -41,6 +45,21 @@ namespace FinancesSharp.Models
             {
                 return Categories.Include(x => x.Parent).Where(c => c.Parent == null);
             }
+        }
+
+        // Later we might add the functionality to create multiple budgets
+        // or introduce versioned budgets. For now, let's just have one default
+        // budget
+        public Budget GetOrCreateDefaultBudget()
+        {
+            var budget = Budgets.SingleOrDefault();
+            if (budget == null)
+            {
+                budget = new Budget();
+                Budgets.Add(budget);
+                SaveChanges();
+            }
+            return budget;
         }
         
         public void Backup()

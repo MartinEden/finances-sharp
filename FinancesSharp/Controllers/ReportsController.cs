@@ -30,6 +30,10 @@ namespace FinancesSharp.Controllers
         {
             return viewReport(report);
         }
+        public ActionResult BudgetReport([Bind(Prefix = "")] BudgetReport report)
+        {
+            return viewReport(report);
+        }
 
         private ActionResult viewReport(Report report)
         {

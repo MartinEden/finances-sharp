@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
@@ -28,7 +28,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
-    <DebugType></DebugType>
+    <DebugType>
+    </DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -133,6 +134,7 @@
     <Compile Include="Binders\CategorisationFormBinder.cs" />
     <Compile Include="Binders\SearchBinder.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\CardController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\FinancesControllerBase.cs" />
@@ -153,9 +155,16 @@
     <Compile Include="Helpers\ModelBindingHelpers.cs" />
     <Compile Include="Helpers\RouteValueDictionaryExtensions.cs" />
     <Compile Include="Helpers\SubstExpressionVisitor.cs" />
+    <Content Include="Content\spinner.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Migrations\20180224_1603_AddBudget.sql" />
+    <Compile Include="Models\Budget.cs" />
+    <Compile Include="Models\BudgetItem.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\CategorisationRule.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\EmptyInitializer.cs" />
     <Compile Include="Models\Exclusion.cs" />
     <Compile Include="Models\FinanceDb.cs" />
     <Compile Include="Models\IHasId.cs" />
@@ -165,6 +174,7 @@
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\AverageMonthlySpendingByCategory.cs" />
+    <Compile Include="Reports\BudgetReport.cs" />
     <Compile Include="Reports\Helpers\BarChartDatapoint.cs" />
     <Compile Include="Reports\ByCategoryReport.cs" />
     <Compile Include="Reports\Helpers\CategoryAmount.cs" />
@@ -180,16 +190,21 @@
     <Compile Include="Reports\OutgoingsByCategory.cs" />
     <Compile Include="Reports\Report.cs" />
     <Compile Include="Reports\UnusualSpendingByCategory.cs" />
+    <Compile Include="ViewModels\BudgetViewModel.cs" />
+    <Compile Include="ViewModels\CategoryToBudgetItemViewModel.cs" />
     <Compile Include="ViewModels\CategorisationForm.cs" />
     <Compile Include="ViewModels\CategoryTree.cs" />
     <Compile Include="ViewModels\ChangeCategoryResult.cs" />
     <Compile Include="ViewModels\EditCategoryViewModel.cs" />
     <Compile Include="ViewModels\IConvertibleToRouteValues.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\NewBudgetItem.cs" />
     <Compile Include="ViewModels\RulesViewModel.cs" />
     <Compile Include="ViewModels\SearchForm.cs" />
     <Compile Include="ViewModels\TransactionSortMode.cs" />
     <Compile Include="ViewModels\StaleRulesViewModel.cs" />
+    <Compile Include="ViewModels\UpdateBudgetItem.cs" />
+    <Compile Include="ViewModels\UpdateMiscellaneousBudgetViewModel.cs" />
     <Compile Include="ViewModels\UploadTransactionsResult.cs" />
     <Compile Include="Helpers\ConnectionStringHelper.cs" />
     <Compile Include="Models\BackupMechanism.cs" />
@@ -278,6 +293,10 @@
     <Content Include="Scripts\Script.js" />
     <Content Include="Scripts\TimeSeriesChart.js" />
     <Content Include="Scripts\tree-select.js" />
+    <Content Include="Views\Budget\Index.cshtml" />
+    <Content Include="Views\Home\EditorTemplates\CategoryFancyBox.cshtml" />
+    <Content Include="Views\Reports\DisplayTemplates\Surplus.cshtml" />
+    <Content Include="Views\Reports\EditorTemplates\BudgetReport.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -312,7 +331,6 @@
     <Content Include="Views\Home\DisplayTemplates\Card.cshtml" />
     <Content Include="Views\Home\DisplayTemplates\ShortTransaction.cshtml" />
     <Content Include="Views\Home\DisplayTemplates\Transaction.cshtml" />
-    <Content Include="Views\Home\EditorTemplates\CategoryFancyBox.cshtml" />
     <Content Include="Views\Home\EditorTemplates\NameBox.cshtml" />
     <Content Include="Views\Home\EditorTemplates\SearchForm.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />

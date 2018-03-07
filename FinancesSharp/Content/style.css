@@ -8,7 +8,8 @@
     Pale purple: rgb(242, 235, 251)
     Darker pale purple: rgb(236, 226, 248)
     Purple: rgb(105, 56, 165);
-    Errors: rgb(127, 0, 0);
+    Errors, deficit: rgb(127, 0, 0);
+    Surplus: rgb(0, 127, 0);
 */
 
 body {
@@ -256,4 +257,76 @@ ul.search-criteria {
 }
 th:hover .sort-arrow {
     opacity: 1;
+}
+
+.budget .errors {
+    color: rgb(127, 0, 0);
+}
+
+.budget .budget-item .name-row h2 {
+    display: inline-block;
+}
+
+.budget .budget-item .undo-link {
+    margin: 10px 0;
+}
+
+.budget .budget-item .name-row .remove-link {
+    display: inline-block;
+    margin-left: 5px;
+    visibility: hidden;
+}
+.budget .budget-item .name-row:hover .remove-link {
+    visibility: visible;
+}
+
+.budget .categories {
+    margin: 5px 0;
+}
+
+.budget .categories .category {
+    display: inline-block;
+    border: 1px solid rgb(180, 180, 180);
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.budget .categories .category:hover {
+    background-color: rgb(242, 235, 251);
+    text-decoration: line-through;
+}
+
+.budget .categories .add-category {
+    margin-right: 5px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+form {
+    position: relative;
+}
+
+.success-fader {
+    display: none;
+    position: absolute;
+    width: 60px;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    height: 15px;
+    padding: 5px;
+    color: white;
+    background-color: green;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.deficit {
+    color: rgb(127, 0, 0);
+}
+.surplus {
+    color: rgb(0, 127, 0);
 }

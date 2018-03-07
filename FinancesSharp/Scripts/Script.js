@@ -1,13 +1,13 @@
 ﻿$(function () {
     $('.datepicker input').datepicker({ dateFormat: 'dd/mm/yy' });
-    var selectors = []
+    var selectors = [];
     
     // Setup category editing
     $.ajax("/Category/All", {
         dataType: "json",
         success: function (categories) {
-            selectors.push(new TreeSelect($(".category-box-no-new"), categories));
-            var selector = new TreeSelect($(".category-box"), categories);
+            selectors.push(new TreeSelect(".category-box-no-new", categories));
+            var selector = new TreeSelect(".category-box", categories);
             selectors.push(selector);
             var button = $("<button></button>").text("Add new category");
             selector.element.append(button);
@@ -29,14 +29,15 @@
                 type: 'POST',
             });
         });
+    
+    $(document).on("keyup", "input", function (event) {
+        if (event.which === 13) {
+            $(this).blur();
+        }
+    });
 
     // Setup name editing
     $(".fancy-box-name").find("input")
-        .on('keyup', function (event) {
-            if (event.which == '13') {
-                $(this).blur();
-            }
-        })
         .blur(function () {
             var input = $(this);
             var id = input.parent().data("id");
@@ -49,11 +50,6 @@
     // Setup card editing
     $(".fancy-box.card-box")
         .find("input.value")
-        .on('keyup', function (event) {
-            if (event.which == '13') {
-                $(this).blur();
-            }
-        })
         .blur(function() {
             var input = $(this);
             var cardNumber = input.parent().data("cardNumber");
@@ -61,7 +57,7 @@
                 data: { "personName": input.val() },
                 type: 'POST',
             });
-        })
+        });
 
 
     var refreshCategorySelectors = function () {

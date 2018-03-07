@@ -1,0 +1,219 @@
+﻿@model FinancesSharp.Models.Budget
+
+@{
+    ViewBag.Title = "Budget";
+}
+
+<script type="text/javascript">
+    var budgetId = @Model.Id;
+    var removeCategoryUrl = "@Url.Action("RemoveCategory", new {Model.Id})";
+    var deleteBudgetItemUrl = "@Url.Action("DeleteBudgetItem", new {Model.Id})";
+    var restoreBudgetItemUrl = "@Url.Action("RestoreBudgetItem", new {Model.Id})";
+
+    function makeAjaxForm(form, success) {
+        form.submit(function(event) {
+            event.preventDefault();
+            form.find(".errors").empty();
+            $.post(form.attr("action"), form.serialize())
+                .done(function() {
+                    var pos = form.offset();
+                    $(".success-fader").show().css(pos).fadeOut();
+                    success();
+                })
+                .fail(function(jqXhr, textStatus, errorThrown) {
+                    var message = textStatus;
+                    if (jqXhr.responseJSON) {
+                        message = jqXhr.responseJSON.join(". ");
+                    }
+                    form.find(".errors").text(message);
+                });
+        });
+    }
+
+    function makeCategory(itemId, category) {
+        var element = $("#exemplars .category")
+            .clone();
+        element.text(category.Name);
+        if (itemId != null) {
+            element.click(function() {
+                var data = {
+                    ItemId: itemId,
+                    CategoryId: category.Id
+                };
+                $.post(removeCategoryUrl, data)
+                    .done(function() { element.remove(); })
+                    .fail(genericError);
+            });
+        }
+        return element;
+    }
+
+    function makeUndoLink(callback) {
+        var element = $("#exemplars .undo-link")
+            .clone();
+        element.click(function(e) {
+            e.preventDefault();
+            callback();
+        });
+        return element;
+    }
+    
+    function restoreBudgetItem(item) {
+        return function() {
+            var data = { itemId: item.Id };
+            $.post(restoreBudgetItemUrl, data)
+                .done(refreshBudget)
+                .fail(genericError);
+        }
+    }
+    
+    function deleteBudgetItem(element, item) {
+        return function(e) {
+            e.preventDefault();
+            var data = { itemId: item.Id };
+            $.post(deleteBudgetItemUrl, data)
+                .done(function() {
+                    element.empty();
+                    element.append(makeUndoLink(restoreBudgetItem(item)));
+                })
+                .fail(genericError);
+        };
+    }
+
+    function makeBudgetItem(item) {
+        var element = $("#exemplars .budget-item")
+            .clone();
+        element.find(".name").val(item.Name);
+        element.find(".amount").val(item.BudgetedAmount);
+        var categories = element.find(".categories");
+        item.Categories.forEach(function(category) {
+            categories.append(makeCategory(item.Id, category));
+        });
+        element.find(".id").val(item.Id);
+        makeAjaxForm(element.find("form.add-category"), refreshBudget);
+        makeAjaxForm(element.find("form.update-item"), refreshBudget);
+        element.find(".fancy-box input").blur(function() {
+            $(this).closest("form").submit();
+        });
+        element.find(".remove-link a").click(deleteBudgetItem(element, item));
+        return element;
+    }
+    
+    function makeMiscellaneousBudgetItem(budgetViewModel) {
+        var element = $("#exemplars .misc-budget-item")
+            .clone();
+        element.find(".name").text("Miscellaneous spending");
+        element.find(".amount").val(budgetViewModel.Budget.MiscellaneousBudget);
+        var categories = element.find(".categories");
+        budgetViewModel.SpareCategories.forEach(function(category) {
+            categories.append(makeCategory(null, category));
+        });
+        makeAjaxForm(element.find("form.update-misc-budget"), refreshBudget);
+        element.find(".fancy-box input").blur(function() {
+            $(this).closest("form").submit();
+        });
+        return element;
+    }
+
+    function refreshBudget() {
+        $.getJSON("/Budget/Get/" + budgetId,
+            function(budgetViewModel) {
+                var container = $(".budget-items");
+                container.empty();
+                budgetViewModel.Budget.Items.forEach(function(item) {
+                    container.append(makeBudgetItem(item));
+                });
+                container.append(makeMiscellaneousBudgetItem(budgetViewModel));
+            });
+    }
+    
+    function genericError(jqXhr, errorMessage) {
+        alert(jqXhr.responseText);
+    }
+
+    $(function() {
+        refreshBudget();
+        makeAjaxForm($(".new-budget-item form"), refreshBudget);
+    });
+</script>
+
+<div class="success-fader">Saved</div>
+<div class="budget">
+    <div class="new-budget-item">
+        <h2>Add a new budget item</h2>
+        <form method="post" action="@Url.Action("CreateBudgetItem", new {Model.Id})">
+            <input type="text" name="Name" placeholder="Name"/>
+            <input type="number"
+                   name="BudgetedAmount"
+                   placeholder="Budgeted amount (£)"
+                   step="0.01"/>
+            <button type="submit">Add</button>
+            <div class="errors">
+
+            </div>
+        </form>
+    </div>
+    <div class="budget-items">
+        <img src="@Url.Content("~/Content/spinner.gif")"/>
+    </div>
+        
+
+    <div id="exemplars" style="display: none">
+        <div class="budget-item">
+            <form class="update-item"
+                  method="post"
+                  action="@Url.Action("UpdateBudgetItem", new {Model.Id})">
+                <input class="id" type="hidden" name="ItemId" />
+                <div class="name-row">
+                    <h2 class="fancy-box">
+                        <input class="name" name="Name" type="text" />
+                    </h2>
+                    <div class="remove-link">
+                        <a href="#">Delete</a>
+                    </div>
+                </div>
+                <div class="fancy-box">
+                    £<input 
+                         class="amount" 
+                         name="BudgetedAmount" 
+                         style="width: 100px;" />
+                </div>
+                <div class="errors"></div>
+            </form>
+            <div class="categories">
+                <form class="add-category"
+                      method="post"
+                      action="@Url.Action("AddCategory", new {Model.Id})">
+                    <input class="id" type="hidden" name="ItemId"/>
+                    <span class="category-box">
+                        <input type="text" class="text" value=""/>
+                        <input type="hidden" class="value" name="CategoryId"
+                               onchange="$(this).closest('form').submit();"/>
+                        <input type="hidden" class="previous-text" value=""/>
+                    </span>
+                    <span class="errors"></span>
+                </form>
+            </div>
+        </div>
+        
+        <div class="misc-budget-item">
+            <div class="name-row"><h2 class="name"></h2></div>
+            <form class="update-misc-budget" method="post"
+                action="@Url.Action("UpdateMiscBudgetAmount", new {Model.Id})">
+                <div class="fancy-box">
+                    £<input 
+                         class="amount" 
+                         name="MiscellaneousBudget" 
+                         style="width: 100px;" />
+                </div>
+                <div class="errors"></div>
+            </form>
+            <div class="categories"></div>
+        </div>
+
+        <div class="category"></div>
+        <div class="undo-link">
+            <a href="#">Undo</a>
+        </div>
+    </div>
+</div>
