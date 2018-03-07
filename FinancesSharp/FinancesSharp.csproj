@@ -295,6 +295,7 @@
     <Content Include="Scripts\tree-select.js" />
     <Content Include="Views\Budget\Index.cshtml" />
     <Content Include="Views\Home\EditorTemplates\CategoryFancyBox.cshtml" />
+    <Content Include="Views\Reports\DisplayTemplates\Surplus.cshtml" />
     <Content Include="Views\Reports\EditorTemplates\BudgetReport.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

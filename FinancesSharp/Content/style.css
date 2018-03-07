@@ -8,7 +8,8 @@
     Pale purple: rgb(242, 235, 251)
     Darker pale purple: rgb(236, 226, 248)
     Purple: rgb(105, 56, 165);
-    Errors: rgb(127, 0, 0);
+    Errors, deficit: rgb(127, 0, 0);
+    Surplus: rgb(0, 127, 0);
 */
 
 body {
@@ -321,4 +322,11 @@ form {
     background-color: green;
     border-radius: 5px;
     z-index: 10;
+}
+
+.deficit {
+    color: rgb(127, 0, 0);
+}
+.surplus {
+    color: rgb(0, 127, 0);
 }

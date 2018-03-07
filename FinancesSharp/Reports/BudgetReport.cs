@@ -40,6 +40,16 @@ namespace FinancesSharp.Reports
             }
         }
 
+        public decimal Surplus
+        {
+            get { return Budget.TotalBudget - TotalSpending; }
+        }
+
+        public decimal MiscellaneousSurplus
+        {
+            get { return Budget.MiscellaneousBudget - MiscellaneousSpending; }
+        }
+
         public override void Run(FinanceDb db)
         {
             Budget = db.GetOrCreateDefaultBudget();
@@ -83,6 +93,11 @@ namespace FinancesSharp.Reports
         {
             Item = item;
             TotalSpending = totalSpending;
+        }
+
+        public decimal Surplus
+        {
+            get { return Item.BudgetedAmount - TotalSpending; }
         }
     }
 }

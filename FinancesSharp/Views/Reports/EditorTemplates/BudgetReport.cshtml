@@ -13,13 +13,13 @@
     </div>
 }
 
-<div>Note: negative means income, positive means spending</div>
-<table style="max-width: 700px;">
+<table style="max-width: 900px;">
     <thead>
     <tr>
         <th></th>
-        <th>Budgeted (£)</th>
-        <th>Actual (£)</th>
+        <th>Budgeted spending (£)</th>
+        <th>Actual spending (£)</th>
+        <th>Surplus (£ saved)</th>
     </tr>
     </thead>
     <tbody>
@@ -27,6 +27,7 @@
         <td>Total</td>
         <td>@Model.Budget.TotalBudget</td>
         <td>@Model.TotalSpending</td>
+        <td>@Html.DisplayFor(x => x.Surplus, "Surplus")</td>
     </tr>
     @foreach (var item in Model.Data)
     {
@@ -34,12 +35,14 @@
             <td>@item.Item.Name</td>
             <td>@item.Item.BudgetedAmount</td>
             <td>@item.TotalSpending</td>
+            <td>@Html.DisplayFor(_ => item.Surplus, "Surplus")</td>
         </tr>
     }
     <tr>
         <td>Miscellaneous / discretionary</td>
         <td>@Model.Budget.MiscellaneousBudget</td>
         <td>@Model.MiscellaneousSpending</td>
+        <td>@Html.DisplayFor(x => x.MiscellaneousSurplus, "Surplus")</td>
     </tr>
      </tbody>
 </table>

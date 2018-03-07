@@ -1,0 +1,9 @@
+﻿@model decimal
+@if (Model < 0)
+{
+    <div class="deficit">@Model</div>
+}
+else
+{
+    <div class="surplus">@Model</div>
+}
