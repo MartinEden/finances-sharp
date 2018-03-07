@@ -258,6 +258,10 @@ th:hover .sort-arrow {
     opacity: 1;
 }
 
+.budget .errors {
+    color: rgb(127, 0, 0);
+}
+
 .budget .budget-item .name-row h2 {
     display: inline-block;
 }

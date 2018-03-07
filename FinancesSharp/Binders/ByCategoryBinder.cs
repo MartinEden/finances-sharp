@@ -27,4 +27,12 @@ namespace FinancesSharp.Binders
         }
     }
     public class OutgoingsByCategoryOverTimeBinder : ByCategoryBinder<OutgoingsByCategoryOverTime> { }
+
+    public class BudgetReportBinder : Binder<BudgetReport>
+    {
+        protected override void bindProperties(ControllerContext c, ModelBindingContext b)
+        {
+            bindMonthAndYear(x => x.Month, c, b);
+        }
+    }
 }

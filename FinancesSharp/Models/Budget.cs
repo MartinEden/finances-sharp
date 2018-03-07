@@ -30,5 +30,19 @@ namespace FinancesSharp.Models
         {
             get { return Items.SelectMany(x => x.Categories).Distinct(); }
         }
+
+        public IEnumerable<Category> SpareCategories(FinanceDb db)
+        {
+            return db.Categories
+                .ToList()
+                .Except(AllCategories)
+                .Except(db.Categories.Single(x => x.Name == "Income").Children)
+                .ToList();
+        }
+
+        public decimal TotalBudget
+        {
+            get { return Items.Sum(x => x.BudgetedAmount) + MiscellaneousBudget; }
+        }
     }
 }
