@@ -22,7 +22,13 @@ time to fix and extend things.
 1. Create a blank database server:
    ```
    sudo apt install mysql-server
-   sudo apt install mysql-client-core-5.7
+   sudo apt install mysql-client-core-5.7   
+   ```
+1. Create an empty database:
+   ```
+   mysql -u root -p
+   create database finances_sharp;
+   quit
    ```
 1. Run the app with connection string
    ```
