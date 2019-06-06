@@ -22,7 +22,7 @@ namespace FinancesSharp.Models
             {
                 Id,
                 MiscellaneousBudget,
-                Items = Items.Select(x => x.Flatten())
+                Items = Items.OrderByDescending(x => x.BudgetedAmount).Select(x => x.Flatten())
             };
         }
 

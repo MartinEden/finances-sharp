@@ -259,11 +259,31 @@ th:hover .sort-arrow {
     opacity: 1;
 }
 
+.budget {
+    position: relative;
+}
+
 .budget .errors {
     color: rgb(127, 0, 0);
 }
 
-.budget .budget-item .name-row h2 {
+.budget .new-budget-item {
+    margin-bottom: 20px;
+}
+
+.budget .right-section {
+    position: absolute;
+    left: 400px;
+}
+
+.budget .budget-item {
+    border: 1px solid rgb(180, 180, 180);
+    padding: 5px;
+    margin: 5px 0;
+    width: 300px;
+}
+
+.budget .budget-item .name-row * {
     display: inline-block;
 }
 

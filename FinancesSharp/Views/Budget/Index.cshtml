@@ -85,17 +85,33 @@
             .clone();
         element.find(".name").val(item.Name);
         element.find(".amount").val(item.BudgetedAmount);
-        var categories = element.find(".categories");
-        item.Categories.forEach(function(category) {
-            categories.append(makeCategory(item.Id, category));
-        });
         element.find(".id").val(item.Id);
-        makeAjaxForm(element.find("form.add-category"), refreshBudget);
         makeAjaxForm(element.find("form.update-item"), refreshBudget);
         element.find(".fancy-box input").blur(function() {
             $(this).closest("form").submit();
         });
         element.find(".remove-link a").click(deleteBudgetItem(element, item));
+        element.find(".edit-link a").click(function() {
+            $(".budget .right-section").append(makeCategoriesSection(item));
+        });
+        return element;
+    }
+    
+    function makeCategoriesSection(item) {
+        // Remove existing section
+        $(".budget .right-section .categories-section").remove();
+        
+        // Create new one
+        var element = $("#exemplars .categories-section").clone();
+        element.find(".fancy-box input").blur(function() {
+            $(this).closest("form").submit();
+        });
+        element.find(".id").val(item.Id);
+        element.find(".name").text(item.Name);
+        item.Categories.forEach(function(category) {
+            element.append(makeCategory(item.Id, category));
+        });
+        makeAjaxForm(element.find("form.add-category"), refreshBudget);
         return element;
     }
     
@@ -153,58 +169,68 @@
             </div>
         </form>
     </div>
-    <div class="budget-items">
-        <img src="@Url.Content("~/Content/spinner.gif")"/>
+    <div>
+        <div class="right-section"></div>
+        <div class="budget-items">
+            <img src="@Url.Content("~/Content/spinner.gif")"/>
+        </div>
     </div>
-        
+
 
     <div id="exemplars" style="display: none">
         <div class="budget-item">
             <form class="update-item"
                   method="post"
                   action="@Url.Action("UpdateBudgetItem", new {Model.Id})">
-                <input class="id" type="hidden" name="ItemId" />
+                <input class="id" type="hidden" name="ItemId"/>
                 <div class="name-row">
-                    <h2 class="fancy-box">
-                        <input class="name" name="Name" type="text" />
-                    </h2>
+                    <div class="fancy-box">
+                        <input class="name" name="Name" type="text"/>
+                    </div>
+                    <div class="fancy-box">
+                        £<input
+                             class="amount"
+                             name="BudgetedAmount"
+                             style="width: 100px;"/>
+                    </div>
+                    <div class="edit-link">
+                        <a href="#">Edit</a>
+                    </div>
                     <div class="remove-link">
                         <a href="#">Delete</a>
                     </div>
                 </div>
-                <div class="fancy-box">
-                    £<input 
-                         class="amount" 
-                         name="BudgetedAmount" 
-                         style="width: 100px;" />
-                </div>
                 <div class="errors"></div>
             </form>
-            <div class="categories">
-                <form class="add-category"
-                      method="post"
-                      action="@Url.Action("AddCategory", new {Model.Id})">
-                    <input class="id" type="hidden" name="ItemId"/>
-                    <span class="category-box">
-                        <input type="text" class="text" value=""/>
-                        <input type="hidden" class="value" name="CategoryId"
-                               onchange="$(this).closest('form').submit();"/>
-                        <input type="hidden" class="previous-text" value=""/>
-                    </span>
-                    <span class="errors"></span>
-                </form>
-            </div>
         </div>
-        
+
+        <div class="categories-section categories">
+            <div>Categories in <span class="name"></span></div>
+            <form class="add-category"
+                  method="post"
+                  action="@Url.Action("AddCategory", new {Model.Id})">
+                <input class="id" type="hidden" name="ItemId"/>
+                <span class="category-box">
+                    <input type="text" class="text" value=""/>
+                    <input type="hidden" class="value" name="CategoryId"
+                           onchange="$(this).closest('form').submit();"/>
+                    <input type="hidden" class="previous-text" value=""/>
+                </span>
+                <span class="errors"></span>
+            </form>
+        </div>
+
         <div class="misc-budget-item">
-            <div class="name-row"><h2 class="name"></h2></div>
+            <div class="name-row">
+                <h2 class="name"></h2>
+            </div>
             <form class="update-misc-budget" method="post"
-                action="@Url.Action("UpdateMiscBudgetAmount", new {Model.Id})">
+                  action="@Url.Action("UpdateMiscBudgetAmount", new {Model.Id})">
                 <div class="fancy-box">
-                    £<input 
-                         class="amount" 
-                         name="MiscellaneousBudget" 
-                         style="width: 100px;" />
+                    £<input
+                         class="amount"
+                         name="MiscellaneousBudget"
+                         style="width: 100px;"/>
                 </div>
                 <div class="errors"></div>
             </form>
