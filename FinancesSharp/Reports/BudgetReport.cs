@@ -14,6 +14,7 @@ namespace FinancesSharp.Reports
         public Budget Budget { get; set; }
         public IEnumerable<BudgetReportItem> Data { get; private set; }
         public decimal MiscellaneousSpending { get; private set; }
+        public IEnumerable<Transaction> MiscellaneousTransactions { get; private set; }
         
         public BudgetReport()
         {
@@ -56,11 +57,12 @@ namespace FinancesSharp.Reports
             var transactions = retrieve(db).GroupBy(x => x.Category)
                 .ToList();
             Data = Budget.Items.Select(item => new BudgetReportItem(
-                item, 
-                getTotalForCategories(transactions, item.Categories)
+                item,
+                GetTransactionsForCategories(transactions, item.Categories)
             )).ToList();
             
-            MiscellaneousSpending = getTotalForCategories(transactions, Budget.SpareCategories(db));
+            MiscellaneousTransactions = GetTransactionsForCategories(transactions, Budget.SpareCategories(db));
+            MiscellaneousSpending = GetTotalForCategories(MiscellaneousTransactions);
         }
 
         private IQueryable<Transaction> retrieve(FinanceDb db)
@@ -72,15 +74,22 @@ namespace FinancesSharp.Reports
             };
             return db.Transactions.Where(search.IsMatch());
         }
-
-        private decimal getTotalForCategories(
-            IEnumerable<IGrouping<Category, Transaction>> transactions,
-            IEnumerable<Category> categories
+        
+        public static decimal GetTotalForCategories(
+            IEnumerable<Transaction> transactions
         )
         {
             // We invert the result here, because transactions are stored where +ve is income and -ve is spending,
             // but this report uses +ve to mean spending
-            return -transactions.Where(x => categories.Contains(x.Key)).SelectMany(x => x).Sum(x => x.Amount);
+            return -transactions.Sum(x => x.Amount);
+        }
+
+        public static IEnumerable<Transaction> GetTransactionsForCategories(
+              IEnumerable<IGrouping<Category, Transaction>> transactions,
+            IEnumerable<Category> categories
+        )
+        {
+            return transactions.Where(x => categories.Contains(x.Key)).SelectMany(x => x);
         }
     }
 
@@ -88,11 +97,13 @@ namespace FinancesSharp.Reports
     {
         public readonly BudgetItem Item;
         public readonly decimal TotalSpending;
+        public readonly IEnumerable<Transaction> Transactions;
 
-        public BudgetReportItem(BudgetItem item, decimal totalSpending)
+        public BudgetReportItem(BudgetItem item, IEnumerable<Transaction> transcations)
         {
             Item = item;
-            TotalSpending = totalSpending;
+            Transactions = transcations;
+            TotalSpending = BudgetReport.GetTotalForCategories(transcations);
         }
 
         public decimal Surplus

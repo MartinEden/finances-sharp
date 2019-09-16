@@ -20,6 +20,7 @@
         <th>Budgeted spending (£)</th>
         <th>Actual spending (£)</th>
         <th>Surplus (£ saved)</th>
+		<th>Transactions</th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
         <td>@Model.Budget.TotalBudget</td>
         <td>@Model.TotalSpending</td>
         <td>@Html.DisplayFor(x => x.Surplus, "Surplus")</td>
+		<td></td>
     </tr>
     @foreach (var item in Model.Data)
     {
@@ -36,6 +38,7 @@
             <td>@item.Item.BudgetedAmount</td>
             <td>@item.TotalSpending</td>
             <td>@Html.DisplayFor(_ => item.Surplus, "Surplus")</td>
+			<td>@Html.DisplayFor(_ => item.Transactions)</td>
         </tr>
     }
     <tr>
@@ -43,6 +46,7 @@
         <td>@Model.Budget.MiscellaneousBudget</td>
         <td>@Model.MiscellaneousSpending</td>
         <td>@Html.DisplayFor(x => x.MiscellaneousSurplus, "Surplus")</td>
+		<td>@Html.DisplayFor(x => x.MiscellaneousTransactions)</td>
     </tr>
      </tbody>
 </table>
