@@ -31,8 +31,8 @@ namespace FinancesSharp.Models
             if (DateFrom != null) { expr = expr.And(trx => DateFrom <= trx.Date); }
             if (DateTo != null) { expr = expr.And(trx => DateTo >= trx.Date); }
             if (Income != null) { expr = expr.And(trx => Income == trx.Amount > 0); }
-            if (AmountFrom != null) { expr = expr.And(trx => AmountFrom <= trx.Amount); }
-            if (AmountTo != null) { expr = expr.And(trx => AmountTo >= trx.Amount); }
+            if (AmountFrom != null) { expr = expr.And(trx => AmountFrom <= Math.Abs(trx.Amount)); }
+            if (AmountTo != null) { expr = expr.And(trx => AmountTo >= Math.Abs(trx.Amount)); }
             if (Person != null) { expr = expr.And(trx => trx.Card != null && Person.Id == trx.Card.Person.Id); }
             return expr;
         }
