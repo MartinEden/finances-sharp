@@ -38,7 +38,7 @@
             <td>@item.Item.BudgetedAmount</td>
             <td>@item.TotalSpending</td>
             <td>@Html.DisplayFor(_ => item.Surplus, "Surplus")</td>
-			<td>@Html.DisplayFor(_ => item.Transactions)</td>
+			<td>@Html.DisplayFor(_ => item.Transactions, "TransactionList")</td>
         </tr>
     }
     <tr>
@@ -46,7 +46,7 @@
         <td>@Model.Budget.MiscellaneousBudget</td>
         <td>@Model.MiscellaneousSpending</td>
         <td>@Html.DisplayFor(x => x.MiscellaneousSurplus, "Surplus")</td>
-		<td>@Html.DisplayFor(x => x.MiscellaneousTransactions)</td>
+		<td>@Html.DisplayFor(x => x.MiscellaneousTransactions, "TransactionList")</td>
     </tr>
      </tbody>
 </table>

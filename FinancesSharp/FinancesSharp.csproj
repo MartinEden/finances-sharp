@@ -297,6 +297,7 @@
     <Content Include="Views\Home\EditorTemplates\CategoryFancyBox.cshtml" />
     <Content Include="Views\Reports\DisplayTemplates\Surplus.cshtml" />
     <Content Include="Views\Reports\EditorTemplates\BudgetReport.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ShortTransaction.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -330,7 +331,6 @@
     <Content Include="Views\Card\EditorTemplates\Card.cshtml" />
     <Content Include="Views\Card\Index.cshtml" />
     <Content Include="Views\Home\DisplayTemplates\Card.cshtml" />
-    <Content Include="Views\Home\DisplayTemplates\ShortTransaction.cshtml" />
     <Content Include="Views\Home\DisplayTemplates\Transaction.cshtml" />
     <Content Include="Views\Home\EditorTemplates\NameBox.cshtml" />
     <Content Include="Views\Home\EditorTemplates\SearchForm.cshtml" />

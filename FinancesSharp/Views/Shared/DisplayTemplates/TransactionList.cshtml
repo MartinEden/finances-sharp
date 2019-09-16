@@ -1,2 +1,6 @@
 ﻿@model IEnumerable<FinancesSharp.Models.Transaction>
-@string.Join("<br/>",Model.Select(x=>x.ToString()))
+@foreach (var item in Model)
+{
+    @Html.DisplayFor(m => item, "ShortTransaction")
+    <br/>
+}
