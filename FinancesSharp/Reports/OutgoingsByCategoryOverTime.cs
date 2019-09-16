@@ -11,6 +11,12 @@ namespace FinancesSharp.Reports
     [ModelBinder(typeof(OutgoingsByCategoryOverTimeBinder))]
     public class OutgoingsByCategoryOverTime : ByCategoryReport<CategoryMonthAmount>
     {
+        public OutgoingsByCategoryOverTime()
+        {
+            DateFrom = MonthAndYear.Current.AddYears(-1).ToDateTime(MonthAndYear.PositionInMonth.Start);
+            DateTo = MonthAndYear.Current.AddMonths(-1).ToDateTime(MonthAndYear.PositionInMonth.End);
+        }
+        
         public override string FriendlyName
         {
             get { return "How is our spending changing?"; }

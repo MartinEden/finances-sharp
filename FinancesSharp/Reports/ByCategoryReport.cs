@@ -23,9 +23,9 @@ namespace FinancesSharp.Reports
 
         public ByCategoryReport()
         {
-            var endMonth = MonthAndYear.Current.AddMonths(-1);
-            DateTo = endMonth.ToDateTime(MonthAndYear.PositionInMonth.End);
-            DateFrom = endMonth.AddYears(-1).AddMonths(1).ToDateTime(MonthAndYear.PositionInMonth.Start);
+            var previousMonth = MonthAndYear.Current.AddMonths(-1);
+            DateFrom = previousMonth.ToDateTime(MonthAndYear.PositionInMonth.Start);
+            DateTo = previousMonth.ToDateTime(MonthAndYear.PositionInMonth.End);
         }
 
         public override void Run(FinanceDb db)
