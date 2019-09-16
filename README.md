@@ -14,9 +14,9 @@ time to fix and extend things.
 
 # Linux build instructions
 1. If you don't have mono already: `sudo apt-get install mono-complete`
-2. `xbuild FinancesSharp.sln`
-3. `cd FinancesSharp && xsp` to run an XSP server (usual disclaimers regarding 
-    XSP not being suitable for real production deployment)
+2. `./build_and_run.sh` (This runs the app using XSP, which is not suitable 
+   for production environments)
+3. Browse to http://localhost:9000/ (XSP's default)
 
 ## Setup a MySQL instance
 1. Create a blank database server:
