@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-msbuild
+xbuild
 (cd FinancesSharp && xsp)

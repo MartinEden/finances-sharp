@@ -18,28 +18,30 @@ time to fix and extend things.
    for production environments)
 3. Browse to http://localhost:9000/ (XSP's default)
 
-## Setup a MySQL instance
-1. Create a blank database server:
+## Setup a blank database
+1. Create a blank database server and enable password login for root:
    ```
    sudo apt install mysql-server
-   sudo apt install mysql-client-core-5.7   
-   ```
-1. Create an empty database:
-   ```
-   mysql -u root -p
-   create database finances_sharp;
+   sudo apt install mysql-client-core-5.7  
+   sudo mysql -u root
+   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '<ROOT_PASSWORD>';
    quit
    ```
-1. Run the app with connection string
-   ```
-   connectionString="server=localhost;port=3306;database=finances_sharp;uid=root;pwd=ROOT_PASSWORD"
-   ```
-   Entity Framework will create a blank database using Code First.
-1. Update the connection string to a limited user:
-   ```
-   connectionString="server=localhost;port=3306;database=finances_sharp;uid=finances_sharp"
-   ```
-1. Setup that user in the server:
+1. Make these two changes to the app and run it to create the blank database:
+   - Change the connection string to: 
+     ```
+     connectionString="server=localhost;port=3306;database=finances_sharp;uid=root;pwd=ROOT_PASSWORD"
+     ```
+   - In FinanceDb's constructor, uncomment the `CreateDatabaseIfNotExists` line, and comment
+     out the `EmptyInitializer` line.
+   - Run using `build_and_run.sh`   
+1. Return the app to normal settings:
+   - Update the connection string to a limited user:
+     ```
+     connectionString="server=localhost;port=3306;database=finances_sharp;uid=finances_sharp"
+     ```
+   - Restore the `EmptyInitializer` line and comment out the `CreateDatabaseIfNotExists` line
+1. Setup the limited user in the server:
    ```
    mysql -u root -p
    create user finances_sharp;
