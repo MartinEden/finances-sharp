@@ -168,7 +168,7 @@ function TreeSelect_Node(data, container, tree, padding) {
 			.click(function() {
 				tree.select(node);
 			})
-            .keyup(function(event) {
+            .keydown(function(event) {
                 if (event.which == RIGHT) {
                     node.expand();
                 }
@@ -188,6 +188,7 @@ function TreeSelect_Node(data, container, tree, padding) {
                         next = node.element.closest("ol").closest("li").next("li");
                     }
                     next.find(".info").first().focus();
+                    event.preventDefault();
                 }
                 if (event.which == UP) {
                     var previous = node.element.prev("li").first();
@@ -205,10 +206,6 @@ function TreeSelect_Node(data, container, tree, padding) {
                     } else {
                         tree.field.focus();
                     }
-                }
-            })
-            .keydown(function(event) {
-                if (event.which == DOWN || event.which == UP) {
                     event.preventDefault();
                 }
             });
