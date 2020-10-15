@@ -13,21 +13,38 @@ namespace FinancesSharp.Models
     {
         [Key]
         public int Id { get; set; }
-        
+
         public string Name { get; set; }
         public virtual Category Category { get; set; }
+        [Display(Name = "Include subcategories")]
+        public bool IncludeSubCategories { get; set; }
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
         public bool? Income { get; set; }
-        public Decimal? AmountFrom {get; set; }
+        public Decimal? AmountFrom { get; set; }
         public Decimal? AmountTo { get; set; }
         public virtual Person Person { get; set; }
-        
+
+        public Search()
+        {
+            IncludeSubCategories = true;
+        }
+
         public Expression<Func<Transaction, bool>> IsMatch()
         {
-            Expression<Func<Transaction, bool>> expr = trx => true;         
+            Expression<Func<Transaction, bool>> expr = trx => true;
             if (Name != null) { expr = expr.And(trx => trx.Name.ToLower().Contains(Name.ToLower())); }
-            if (Category != null) { expr = expr.And(Category.RecursiveFilter); }
+            if (Category != null)
+            {
+                if (IncludeSubCategories)
+                {
+                    expr = expr.And(Category.RecursiveFilter);
+                }
+                else
+                {
+                    expr = expr.And(trx => trx.Category.Id == Category.Id);
+                }
+            }
             if (DateFrom != null) { expr = expr.And(trx => DateFrom <= trx.Date); }
             if (DateTo != null) { expr = expr.And(trx => DateTo >= trx.Date); }
             if (Income != null) { expr = expr.And(trx => Income == trx.Amount > 0); }
@@ -36,9 +53,9 @@ namespace FinancesSharp.Models
             if (Person != null) { expr = expr.And(trx => trx.Card != null && Person.Id == trx.Card.Person.Id); }
             return expr;
         }
-        
+
         public override string ToString()
-        {            
+        {
             return string.Join(", ", Criteria);
         }
         public IEnumerable<string> Criteria

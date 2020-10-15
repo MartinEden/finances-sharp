@@ -9,6 +9,7 @@ namespace FinancesSharp.Binders
         {            
             bindProperty(x => x.Name, c, b);
             bindNavigationProperty(x => x.Category, c, b);
+            bindProperty(x => x.IncludeSubCategories, c, b);
             bindDate(x => x.DateFrom, c, b);
             bindDate(x => x.DateTo, c, b);
             bindProperty(x => x.Income, c, b);

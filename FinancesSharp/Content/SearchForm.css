@@ -21,17 +21,33 @@
 .search-form .field {
     display: inline-block;
     float: left;
-    padding: 4px;
+    padding: 0px;
+}
+.search-form .element {
+    display: inline-block;
+    margin: 4px;
+    width: 254px;
 }
 .search-form input, .search-form select {
     font-size: inherit;
+    background-color: inherit;
     margin: 0;
     padding: 0;
     border: 0;
-    width: 254px;
-    background-color: inherit;
+}
+.search-form .datepicker input {
+    width: 200px;
 }
 .search-form button {
     font-size: inherit;
     width: 350px;
+}
+.search-form .field .additional-options {
+    float: right;
+    display: block;
+    height: 20px;
+    font-size: 10pt;
+    border-left: 1px solid rgb(180, 180, 180);
+    margin: 0;
+    padding: 5px;
 }

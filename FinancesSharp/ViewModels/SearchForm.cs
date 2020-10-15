@@ -30,6 +30,7 @@ namespace FinancesSharp.ViewModels
             var dict = new RouteValueDictionary();
             dict.Add(this, x => x.Search.Name);
             dict.Add(this, x => x.Search.Category, CategoryId);
+            dict.Add(this, x => x.Search.IncludeSubCategories);
             dict.Add(this, x => x.Search.DateFrom);
             dict.Add(this, x => x.Search.DateTo);
             dict.Add(this, x => x.Search.Income);
