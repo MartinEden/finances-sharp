@@ -95,7 +95,12 @@ TreeSelect.prototype.blur = function() {
 		var tree = this;
 		this.timer = setTimeout(function() {
 		    tree.element.fadeOut();
-		    tree.field.val(tree.previousTextField.val());
+            if (tree.field.val() == "") {
+                tree.hidden.val("");
+                tree.previous.val("");
+            } else {
+		        tree.field.val(tree.previousTextField.val());
+            }
 		}, 50);
 	}
 }
