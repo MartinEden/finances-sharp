@@ -1,3 +1,8 @@
+var LEFT = 37;
+var UP = 38;
+var RIGHT = 39;
+var DOWN = 40;
+
 // Elements should be a jQuery set of input elements which should be turned
 // into tree selectors. The data should be an array of object. Each object
 // must have a 'name' property, which is displayed in the selector, and a
@@ -47,13 +52,18 @@ TreeSelect.prototype.makeChild = function(data) {
 };
 TreeSelect.prototype.clicked = function(section) {
 	var tree = this;
-	this.field = section.find("input.text");
-	this.hidden = section.find("input.value");
-	this.previousTextField = section.find("input.previous-text");
+    if (!this.field) {
+    	this.field = section.find("input.text");
+    	this.hidden = section.find("input.value");
+    	this.previousTextField = section.find("input.previous-text");
 
-	this.field.keyup(function() {
-		tree.filter(tree.field.val());
-	});
+    	this.field.keyup(function(event) {
+    		tree.filter(tree.field.val());
+            if (event.which == DOWN) {
+                tree.nodes[0].info.focus();
+            }
+    	});
+    }
 	tree.filter(tree.field.val());
 	this.element.find(".highlight").removeClass(".highlight");
 	this.collapse();
@@ -115,7 +125,7 @@ TreeSelect.prototype.setDefaultSettings = function(input) {
         input = {};
     }
     if (!input.hasOwnProperty("minQueryLength")) {
-        input.minQueryLength = 3;
+        input.minQueryLength = 2;
     }
     if (!input.hasOwnProperty("showEmptyOption")) {
         input.showEmptyOption = true;
@@ -157,7 +167,47 @@ function TreeSelect_Node(data, container, tree, padding) {
 			.css("width", tree.width() - padding * 35 + 5)
 			.click(function() {
 				tree.select(node);
-			});
+			})
+            .keyup(function(event) {
+                if (event.which == RIGHT) {
+                    node.expand();
+                }
+                if (event.which == LEFT) {
+                    if (node.list && node.expanded) {
+                        node.collapse();
+                    } else {
+                        node.element.closest("ol").closest("li").find(".info").first().focus();
+                    }
+                }
+                if (event.which == DOWN) {
+                    var next = node.element.find("ol:visible").first().find("li").first();
+                    if (!next.length) { 
+                        next = node.element.next("li");
+                    }
+                    if (!next.length) {
+                        next = node.element.closest("ol").closest("li").next("li");
+                    }
+                    next.find(".info").first().focus();
+                }
+                if (event.which == UP) {
+                    var previous = node.element.prev("li").first();
+                    if (previous.length) {
+                        var lastChild = previous.find("li:visible").last();
+                        if (lastChild.length) {
+                            previous = lastChild;
+                        }
+                    }
+                    if (!previous.length) {
+                        previous = node.element.closest("ol").closest("li");
+                    }
+                    previous.find(".info").first().focus();
+                }
+            })
+            .keydown(function(event) {
+                if (event.which == DOWN || event.which == UP) {
+                    event.preventDefault();
+                }
+            });
 		this.element.append(this.info);
 		this.info.append($("<span></span")
 			.text(this.label)

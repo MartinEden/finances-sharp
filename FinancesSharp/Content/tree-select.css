@@ -25,10 +25,18 @@
     margin: 1px 0;
     padding-left: 5px;
 }
-.tree-select .info:hover, .tree-select .info.highlight:hover {
+.tree-select .info:hover, 
+.tree-select .info.highlight:hover,
+.tree-select .info:focus, 
+.tree-select .info.highlight:focus 
+{
 	background-color: rgb(30, 144, 255);
 }
-.tree-select .info:hover .name, .tree-select .info.highlight:hover .name {
+.tree-select .info:hover .name,
+.tree-select .info.highlight:hover .name,
+.tree-select .info:focus .name,
+.tree-select .info.highlight:focus .name 
+{
 	color: white;
 }
 .tree-select .info.highlight {
