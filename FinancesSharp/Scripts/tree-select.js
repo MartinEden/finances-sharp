@@ -200,7 +200,11 @@ function TreeSelect_Node(data, container, tree, padding) {
                     if (!previous.length) {
                         previous = node.element.closest("ol").closest("li");
                     }
-                    previous.find(".info").first().focus();
+                    if (previous.length) {
+                        previous.find(".info").first().focus();
+                    } else {
+                        tree.field.focus();
+                    }
                 }
             })
             .keydown(function(event) {
