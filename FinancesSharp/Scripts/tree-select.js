@@ -1,3 +1,4 @@
+var ENTER = 13;
 var LEFT = 37;
 var UP = 38;
 var RIGHT = 39;
@@ -60,7 +61,8 @@ TreeSelect.prototype.clicked = function(section) {
     	this.field.keyup(function(event) {
     		tree.filter(tree.field.val());
             if (event.which == DOWN) {
-                tree.nodes[0].info.focus();
+                tree.element.find(".info:visible").first().focus();
+                event.preventDefault();
             }
     	});
     }
@@ -168,9 +170,14 @@ function TreeSelect_Node(data, container, tree, padding) {
 			.click(function() {
 				tree.select(node);
 			})
+            .keyup(function(event) {
+                if (event.which == ENTER) {
+                    tree.select(node);
+                }
+            })
             .keydown(function(event) {
                 if (event.which == RIGHT) {
-                    node.expand();
+                    node.expand(true);
                 }
                 if (event.which == LEFT) {
                     if (node.list && node.expanded) {
@@ -191,7 +198,7 @@ function TreeSelect_Node(data, container, tree, padding) {
                     event.preventDefault();
                 }
                 if (event.which == UP) {
-                    var previous = node.element.prev("li").first();
+                    var previous = node.element.prev("li:visible").first();
                     if (previous.length) {
                         var lastChild = previous.find("li:visible").last();
                         if (lastChild.length) {
