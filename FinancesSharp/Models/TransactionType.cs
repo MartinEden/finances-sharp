@@ -18,7 +18,8 @@ namespace FinancesSharp.Models
 
         [Key]
         public int Id { get; set; }
-        [Required, Index(IsUnique = true), Column(TypeName = "varchar")] 
+        [Required, Index(IsUnique = true)]
+        [Column(TypeName = "varchar"), StringLength(50)]
         public string Name { get; set; }
 
         public override string ToString()

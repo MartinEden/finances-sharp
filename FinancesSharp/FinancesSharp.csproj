@@ -251,7 +251,6 @@
     <Compile Include="ViewModels\UploadTransactionsResult.cs" />
     <Compile Include="Helpers\ConnectionStringHelper.cs" />
     <Compile Include="Models\BackupMechanism.cs" />
-    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Chart.css" />
@@ -356,6 +355,7 @@
     <Content Include="Views\Reports\EditorTemplates\OutgoingsByCategoryOverTime.cshtml" />
     <Content Include="Views\Reports\ByCategoryForm.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TransactionList.cshtml" />
+    <None Include="Migrations\20201113_1357_AddIncludeSubCategoriesColumnToSearch.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

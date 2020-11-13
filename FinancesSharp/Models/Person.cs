@@ -9,7 +9,8 @@ namespace FinancesSharp.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required, Index("IX_Name", IsUnique = true), Column(TypeName = "varchar")]
+        [Required][Index("IX_Name", IsUnique = true)]
+        [Column(TypeName = "varchar")][StringLength(50)]
         public string Name { get; set; }
 
         public virtual IEnumerable<Card> Cards { get; set; }
