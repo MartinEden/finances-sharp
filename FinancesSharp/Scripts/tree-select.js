@@ -53,23 +53,22 @@ TreeSelect.prototype.makeChild = function(data) {
 };
 TreeSelect.prototype.clicked = function(section) {
 	var tree = this;
-    if (!this.field) {
-    	this.field = section.find("input.text");
-    	this.hidden = section.find("input.value");
-    	this.previousTextField = section.find("input.previous-text");
-
-    	this.field.keyup(function(event) {
-    		tree.filter(tree.field.val());
-            if (event.which == DOWN) {
-                tree.element.find(".info:visible").first().focus();
-                event.preventDefault();
-            }
-    	});
+    if (this.field) {
+        this.field.off("keyup");
     }
-	tree.filter(tree.field.val());
+	this.field = section.find("input.text");
+	this.hidden = section.find("input.value");
+	this.previousTextField = section.find("input.previous-text");
+	this.field.keyup(function(event) {
+		tree.filter(tree.field.val());
+        if (event.which == DOWN) {
+            tree.element.find(".info:visible").first().focus();
+            event.preventDefault();
+        }
+	});
+	this.filter(this.field.val());
 	this.element.find(".highlight").removeClass(".highlight");
-	this.collapse();
-	tree.focus();
+    this.focus();
 	this.show();	
 	this.field.select();
 }
@@ -127,7 +126,7 @@ TreeSelect.prototype.setDefaultSettings = function(input) {
         input = {};
     }
     if (!input.hasOwnProperty("minQueryLength")) {
-        input.minQueryLength = 2;
+        input.minQueryLength = 0;
     }
     if (!input.hasOwnProperty("showEmptyOption")) {
         input.showEmptyOption = true;
