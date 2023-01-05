@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace FinancesSharp.Models
+namespace FinancesSharp.Models.Migration
 {
     public class EmptyInitializer : IDatabaseInitializer<FinanceDb>
     {

@@ -1,23 +1,24 @@
+using FinancesSharp.Models.Migration;
+using MySql.Data.Entity;
 using System;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web.Configuration;
-using MySql.Data.Entity;
 
 namespace FinancesSharp.Models
 {
-	[DbConfigurationType(typeof(MySqlEFConfiguration))]
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class FinanceDb : DbContext
     {
         public FinanceDb()
         {
             Database.SetInitializer(new EmptyInitializer());
-            //Database.SetInitializer<FinanceDb>(new CreateDatabaseIfNotExists<FinanceDb>());
-            //Database.SetInitializer<FinanceDb>(new DropCreateDatabaseIfModelChanges<FinanceDb>());
+
+            //Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+            //Database.SetInitializer<FinanceDb>(new MigrateDatabaseToLatestVersion<FinanceDb, FixedMigrationInitializer>());
         }
-        
+
         public virtual DbSet<Budget> Budgets { get; set; }
         public virtual DbSet<BudgetItem> BudgetItems { get; set; }
         public virtual DbSet<Card> Cards { get; set; }

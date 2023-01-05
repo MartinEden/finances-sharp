@@ -32,7 +32,7 @@ time to fix and extend things.
      ```
      connectionString="server=localhost;port=3306;database=finances_sharp;uid=root;pwd=ROOT_PASSWORD"
      ```
-   - In FinanceDb's constructor, uncomment the `CreateDatabaseIfNotExists` line, and comment
+   - In FinanceDb's constructor, uncomment the `MigrateDatabaseToLatestVersion` line, and comment
      out the `EmptyInitializer` line.
    - Run using `build_and_run.sh`   
 1. Return the app to normal settings:
@@ -40,7 +40,7 @@ time to fix and extend things.
      ```
      connectionString="server=localhost;port=3306;database=finances_sharp;uid=finances_sharp"
      ```
-   - Restore the `EmptyInitializer` line and comment out the `CreateDatabaseIfNotExists` line
+   - Restore the `EmptyInitializer` line and comment out the `MigrateDatabaseToLatestVersion` line
 1. Setup the limited user in the server:
    ```
    mysql -u root -p

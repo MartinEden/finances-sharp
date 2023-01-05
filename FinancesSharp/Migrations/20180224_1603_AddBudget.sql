@@ -11,7 +11,7 @@ CREATE TABLE `BudgetItems` (
   `Budget_Id` int(11) DEFAULT NULL,
 
   PRIMARY KEY (`Id`),
-  KEY `IX_Budget_Id` (`Budget_Id`) USING HASH,
+  KEY `IX_Budget_Id` (`Budget_Id`) USING BTREE,
   
   CONSTRAINT `FK_BudgetItems_Budgets_Budget_Id` 
     FOREIGN KEY (`Budget_Id`) REFERENCES `Budgets` (`Id`)
@@ -22,8 +22,8 @@ CREATE TABLE `CategoryBudgetItems` (
   `BudgetItem_Id` int(11) NOT NULL,
 
   PRIMARY KEY (`Category_Id`,`BudgetItem_Id`),
-  KEY `IX_Category_Id` (`Category_Id`) USING HASH,
-  KEY `IX_BudgetItem_Id` (`BudgetItem_Id`) USING HASH,
+  KEY `IX_Category_Id` (`Category_Id`) USING BTREE,
+  KEY `IX_BudgetItem_Id` (`BudgetItem_Id`) USING BTREE,
 
   CONSTRAINT `FK_CategoryBudgetItems_BudgetItems_BudgetItem_Id` 
     FOREIGN KEY (`BudgetItem_Id`) REFERENCES `BudgetItems` (`Id`) 
