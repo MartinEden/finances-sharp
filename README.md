@@ -50,6 +50,10 @@ time to fix and extend things.
    ```
 
 ## Restore backup (optional)
+Note that the backup files are created with `CREATE TABLE` queries, for completeness, in the event that this software becomes unrunnable, but you still want to get at your data. However, in normal practice we would prefer EF to create the database schema and then just insert the backed up data. It is simple to go through the SQL file and remove the `DROP TABLE` and `CREATE TABLE` queries.
+
+Then:
+
     mysql -u finances_sharp finances_sharp < path_to_backup.sql
 
 # Windows build instructions

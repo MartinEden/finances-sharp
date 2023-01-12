@@ -45,17 +45,22 @@ namespace FinancesSharp
 		{
 			get { return "sql"; }
 		}
+		private string executablePath
+		{
+			get { return System.Configuration.ConfigurationManager.AppSettings["MySQLDumpPath"]; }
+		}
 
 		public void DoBackup(string path, Database database)
 		{
 			var connString = ConnectionStringHelper.Get("FinanceDb");
-			var args = String.Format("-h {0} -P {1} -u {2} --skip-extended-insert --no-tablespaces {3}",
+			var args = String.Format("-h {0} -P {1} -u {2} --password={2} --no-tablespaces --complete-insert {3}",
 				connString["server"], connString["port"], connString["uid"], connString["database"]);
 						
-			var startInfo = new ProcessStartInfo("/usr/bin/mysqldump", args)
+			var startInfo = new ProcessStartInfo(executablePath, args)
 			{
 			    UseShellExecute = false,
-			    RedirectStandardOutput = true
+			    RedirectStandardOutput = true,
+				RedirectStandardError = true,
 			};
 			var proc = Process.Start(startInfo);
 			using (var outStream = new StreamWriter(path))
@@ -66,7 +71,7 @@ namespace FinancesSharp
 
 			if (proc.ExitCode != 0)
 			{
-				throw new Exception("Backup failed with exit code " + proc.ExitCode);
+				throw new Exception(string.Format("Backup failed with exit code {0}. Error output: {1}", proc.ExitCode, proc.StandardError.ReadToEnd()));
 			}
 		}
 
